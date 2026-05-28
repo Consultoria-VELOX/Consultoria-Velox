@@ -42,9 +42,7 @@ Consultoria-Velox/
 ├── src/                           # Linguagem de Programação (Java)
 │   ├── telas/
 │   │   ├── TelaLogin.java
-│   └── └── TelaCadastro.java
-│   
-│       
+│   │   └── TelaCadastro.java
 │
 ├── network/                       # TI e Conectividade
 │   └── diagrama_rede.pkt            # Diagrama de rede (Cisco Packet Tracer)
