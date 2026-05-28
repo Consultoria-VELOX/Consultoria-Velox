@@ -2,15 +2,25 @@ CREATE DATABASE db_velox;
 
 USE db_velox;
 
-CREATE TABLE tb_clientes (
-id_cliente INT PRIMARY KEY AUTO_INCREMENT,
-nome_cliente VARCHAR(100) NOT NULL,
-sobrenome_cliente VARCHAR(100) NOT NULL,
+CREATE TABLE tb_usuarios (
+id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+nome_usuario VARCHAR(100) NOT NULL,
+sobrenome_usuario VARCHAR(100) NOT NULL,
 email VARCHAR(100) UNIQUE NOT NULL,
 telefone CHAR(14) UNIQUE NOT NULL,
-senha VARCHAR(255) NOT NULL,
-funcao ENUM('cliente', 'admin') NOT NULL,
-criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+senha VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE tb_cargo(
+id_cargo INT PRIMARY KEY,
+nome_cargo VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE tb_usuario_cargo (
+	id_usuario INT NOT NULL,
+    id_cargo INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES tb_usuarios(id_usuario),
+    FOREIGN KEY (id_cargo) REFERENCES tb_cargo(id_cargo)    
 );
 
 CREATE TABLE tb_estoque_veiculos (
@@ -20,14 +30,12 @@ CREATE TABLE tb_estoque_veiculos (
     ano INT NOT NULL,
     placa_veiculo CHAR(7) NOT NULL UNIQUE,
     descricao TEXT NOT NULL,
-    imagem_veiculo LONGBLOB,
-    disponivel BOOLEAN NOT NULL,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    disponivel BOOLEAN NOT NULL
 );
 
 CREATE TABLE tb_tickets(
 	id_ticket INT PRIMARY KEY AUTO_INCREMENT,
-    id_cliente INT NOT NULL,
+    id_usuario INT NOT NULL,
     id_veiculo INT NOT NULL,
     tipo_servico ENUM('Compra','Venda','Consultoria') NOT NULL,
     data_preferida DATE NOT NULL,
@@ -36,6 +44,6 @@ CREATE TABLE tb_tickets(
     status_ticket ENUM('Aberto', 'Em Andamento', 'Resolvido', 'Cancelado') NOT NULL,
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_cliente) REFERENCES tb_clientes(id_cliente),
+    FOREIGN KEY (id_usuario) REFERENCES tb_usuarios(id_usuario),
     FOREIGN KEY (id_veiculo) REFERENCES tb_estoque_veiculos(id_veiculo)
 );
