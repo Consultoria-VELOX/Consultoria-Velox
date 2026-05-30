@@ -9,11 +9,12 @@ public class velox {
     public static String URL = "jdbc:mysql://localhost:3306/db_velox";
     public static String USER = "root";
     public static String PASS = "123123";
+    public static Boolean logado = false;
+    public static String cargo = "Cliente";
 
 
     public static void main(String[] args) {
         String[] opcoes = {"Cadastrar-se", "Logar-se"};
-        Boolean logado = false;
         int respostaRegistroLogin = JOptionPane.showOptionDialog(
                 null,
                 "Seja bem vindo!, Escolha uma opção",
@@ -29,7 +30,8 @@ public class velox {
             JOptionPane.showMessageDialog(null, "Cadastro selecionado", "Velox", JOptionPane.INFORMATION_MESSAGE );
             cadastrarUsuario();
         } else if (respostaRegistroLogin == 1){
-            JOptionPane.showMessageDialog(null, "Login selecionado", "Velox", JOptionPane.INFORMATION_MESSAGE );
+            JOptionPane.showMessageDialog(null, "Login selecionado", "Velox", JOptionPane.INFORMATION_MESSAGE);
+            loginUsuario();
         }//Fim if else
     }// Fim do método main
 
@@ -63,6 +65,7 @@ public class velox {
         formulario.add(new JLabel("Senha:"));
         formulario.add(campoSenha);
 
+        //Enquanto todas os campos não forem preenchidos, o formulário continuará aparecendo
         while(true) {
             int resposta = JOptionPane.showConfirmDialog(
                     null,
@@ -147,7 +150,94 @@ public class velox {
 
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+        }//Fim do try catch
 
     }//Fim do método cadastrarUsuario();
-}
+
+    public static void loginUsuario(){
+        JTextField campoEmail = new JTextField();
+        JTextField campoSenha = new JTextField();
+
+        String emailFornecido = null;
+        String senhaFornecida = null;
+
+        JPanel formularioLogin = new JPanel(new GridLayout(2, 2, 10, 10));
+        formularioLogin.add(new JLabel("E-mail:"));
+        formularioLogin.add(campoEmail);
+        formularioLogin.add(new JLabel("Senha:"));
+        formularioLogin.add(campoSenha);
+
+        while(true){
+            int resposta = JOptionPane.showConfirmDialog(
+                    null,
+                    formularioLogin,
+                    "Logar-se",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.PLAIN_MESSAGE
+            );
+
+            if(resposta != JOptionPane.OK_OPTION){
+                JOptionPane.showMessageDialog(null, "Encerrando...");
+                break;
+            }//Fim if
+
+            emailFornecido = campoEmail.getText();
+            senhaFornecida = campoSenha.getText();
+
+            if(emailFornecido.isEmpty() || senhaFornecida.isEmpty()){
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Todos os campos são obrigatórios!",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                continue;
+            }//Fim if else
+            break;
+        }//Fim while
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS)){
+            String sql = "SELECT c.nome_cargo FROM tb_usuarios u " +
+                    "JOIN tb_usuario_cargo uc ON u.id_usuario = uc.id_usuario " +
+                    "JOIN tb_cargo c ON uc.id_cargo = c.id_cargo " +
+                    "WHERE email = ? AND senha = ?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, emailFornecido);
+            ps.setString(2, senhaFornecida);
+
+            ResultSet rs = ps.executeQuery();
+
+
+            if  (rs.next()) {
+                logado = true;
+                cargo = rs.getString("nome_cargo");
+                System.out.println(cargo);
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Logado com sucesso!!",
+                        "Sucesso!",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            } else {
+                logado = false;
+                JOptionPane.showMessageDialog(
+                        null,
+                        "E-mail ou senha incorretos!",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }//Fim if else
+
+
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao conectar ao banco de dados: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }//Fim try catch
+    }//Fim método loginUsuario()
+}//Fim da classe velox
