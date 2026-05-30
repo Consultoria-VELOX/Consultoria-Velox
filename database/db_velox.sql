@@ -7,13 +7,13 @@ id_usuario INT PRIMARY KEY AUTO_INCREMENT,
 nome_usuario VARCHAR(100) NOT NULL,
 sobrenome_usuario VARCHAR(100) NOT NULL,
 email VARCHAR(100) UNIQUE NOT NULL,
-telefone CHAR(14) UNIQUE NOT NULL,
+telefone CHAR(20) NOT NULL,
 senha VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE tb_cargo(
 id_cargo INT PRIMARY KEY,
-nome_cargo VARCHAR(10) NOT NULL
+nome_cargo VARCHAR(15) NOT NULL
 );
 
 CREATE TABLE tb_usuario_cargo (
@@ -47,3 +47,16 @@ CREATE TABLE tb_tickets(
     FOREIGN KEY (id_usuario) REFERENCES tb_usuarios(id_usuario),
     FOREIGN KEY (id_veiculo) REFERENCES tb_estoque_veiculos(id_veiculo)
 );
+
+INSERT INTO tb_cargo VALUES 
+("1", "Cliente"),
+("2", "Gestor"),
+("3", "Administrador");
+
+INSERT INTO tb_usuarios (nome_usuario, sobrenome_usuario, email, telefone, senha)
+VALUES ('Admin', 'Velox', 'admin@velox.com', '(00) 00000-0000', '123');
+
+INSERT INTO tb_usuario_cargo VALUES (1, 3);
+
+SELECT*FROM tb_usuarios;
+SELECT*FROM tb_usuario_cargo;

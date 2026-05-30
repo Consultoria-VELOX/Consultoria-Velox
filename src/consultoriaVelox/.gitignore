@@ -1,0 +1,17 @@
+# Ignorar pastas de compilação do Java/Maven
+**/target/
+**/bin/
+
+# Ignorar configurações da IDE (IntelliJ)
+**/.idea/
+**/*.iml
+**/*.iws
+
+# Ignorar o Wrapper do Maven
+**/.mvn/
+**/mvnw
+**/mvnw.cmd
+
+# Ignorar arquivos do sistema
+.DS_Store
+Thumbs.db
