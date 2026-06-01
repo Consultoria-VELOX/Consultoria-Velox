@@ -36,9 +36,9 @@ CREATE TABLE tb_estoque_veiculos (
 CREATE TABLE tb_tickets(
 	id_ticket INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT NOT NULL,
-    id_veiculo INT NOT NULL,
+    id_veiculo INT NULL,
     tipo_servico ENUM('Compra','Venda','Consultoria') NOT NULL,
-    data_preferida DATE NOT NULL,
+    data_preferida VARCHAR(15) NOT NULL,
     periodo ENUM('Manhã', 'Tarde', 'Noite') NOT NULL,
     descricao_problema TEXT NOT NULL,
     status_ticket ENUM('Aberto', 'Em Andamento', 'Resolvido', 'Cancelado') NOT NULL,
@@ -58,5 +58,9 @@ VALUES ('Admin', 'Velox', 'admin@velox.com', '(00) 00000-0000', '123');
 
 INSERT INTO tb_usuario_cargo VALUES (1, 3);
 
+INSERT INTO tb_estoque_veiculos (marca_veiculo, modelo_veiculo, ano, placa_veiculo, descricao, disponivel)
+VALUES ('Chevrolet', 'Corsa', '2008', 'AAAAAAA', 'Em perfeito estado', true);
+
 SELECT*FROM tb_usuarios;
 SELECT*FROM tb_usuario_cargo;
+SELECT*FROM tb_tickets;
