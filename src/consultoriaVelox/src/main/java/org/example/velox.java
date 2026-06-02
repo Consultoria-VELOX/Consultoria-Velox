@@ -45,11 +45,11 @@ public class velox {
         }// Fim do while logado
 
 
-        if (logado == true) {
+        while (logado == true) {
             if (cargo.equals("Cliente")) {
                 String[] opcoesCliente = {"Criar Ticket", "Ver Estoque", "Sair"};
 
-                int RespostaCliente = JOptionPane.showOptionDialog(
+                int respostaCliente = JOptionPane.showOptionDialog(
                         null,
                         "Olá " + nomeUsuario + "! Escolha uma opção",
                         "Opções",
@@ -60,8 +60,12 @@ public class velox {
                         opcoesCliente[0]
                 );
 
-                if (RespostaCliente == 0) {
+                if (respostaCliente == 0) {
                     criarTicket();
+                }else if (respostaCliente == 1) {
+                    System.out.println("Ver estoque");
+                }else if (respostaCliente == 2) {
+                    logado = false;
                 }
             }
         }
@@ -74,7 +78,7 @@ public class velox {
         JTextField campoSobrenome = new JTextField();
         JTextField campoEmail = new JTextField();
         JTextField campoTelefone = new JTextField();
-        JTextField campoSenha = new JTextField();
+        JPasswordField campoSenha = new JPasswordField();
 
         //Criação das variaveis que armazenaram as respostas do formulario
         String nome = null;
@@ -118,7 +122,7 @@ public class velox {
             sobrenome = campoSobrenome.getText();
             email = campoEmail.getText();
             telefone = campoTelefone.getText();
-            senha = campoSenha.getText();
+            senha = new String(campoSenha.getPassword());
 
             if (nome.isEmpty() || sobrenome.isEmpty() || email.isEmpty() || telefone.isEmpty() || senha.isEmpty()) {
                 JOptionPane.showMessageDialog(
@@ -194,7 +198,7 @@ public class velox {
 
     public static void loginUsuario() {
         JTextField campoEmail = new JTextField();
-        JTextField campoSenha = new JTextField();
+        JPasswordField campoSenha = new JPasswordField();
 
         String emailFornecido = null;
         String senhaFornecida = null;
@@ -220,7 +224,7 @@ public class velox {
             }//Fim if
 
             emailFornecido = campoEmail.getText();
-            senhaFornecida = campoSenha.getText();
+            senhaFornecida = new String (campoSenha.getPassword());
 
             if (emailFornecido.isEmpty() || senhaFornecida.isEmpty()) {
                 JOptionPane.showMessageDialog(
@@ -250,7 +254,7 @@ public class velox {
                     if (rs.next()) {
                         logado = true;
                         cargo = rs.getString("nome_cargo");
-                        idUsuario = Integer.parseInt(rs.getString("id_usuario"));
+                        idUsuario = rs.getInt("id_usuario");
                         nomeUsuario = rs.getString("nome_usuario") + " " + rs.getString("sobrenome_usuario");
                         JOptionPane.showMessageDialog(
                                 null,
@@ -284,19 +288,21 @@ public class velox {
     }//Fim método loginUsuario()
 
     public static void criarTicket() {
-        String[] opcoesServico = {"Compra", "Venda", "Consultoria"};
+        String[] opcoesServico = {"Compra", "Venda", "Consultoria", "Cancelar"};
         String[] periodosDisponiveis = {"Manhã", "Tarde", "Noite"};
 
         int resposta;
 
         int idVeiculo = 0;
         String tipoServico;
+        String modeloVeiculo = "";
         String dataPreferida = "";
         String periodoPreferido = "";
         String descricaoProblema = "";
 
         //Campos do formulário
         JTextField campoIdVeiculo = new JTextField();
+        JTextField campoModeloVeiculo = new JTextField();
         JTextField campoDataPreferida = new JTextField();
         JTextField campoDescricaoProblema = new JTextField();
 
@@ -311,6 +317,7 @@ public class velox {
                 opcoesServico[0]
         );
 
+        // Se resposta for COMPRA
         if (respostaServico == 0) {
             tipoServico = "Compra";
 
@@ -318,7 +325,7 @@ public class velox {
             JPanel formularioServico = new JPanel(new GridLayout(3, 2, 10, 10));
             formularioServico.add(new JLabel("Id do veiculo: "));
             formularioServico.add(campoIdVeiculo);
-            formularioServico.add(new JLabel("Data preferida (DD/MM/YYYY): "));
+            formularioServico.add(new JLabel("Data preferida para contato (DD/MM/YYYY): "));
             formularioServico.add(campoDataPreferida);
             formularioServico.add(new JLabel("Descrição do problema: "));
             formularioServico.add(campoDescricaoProblema);
@@ -327,7 +334,7 @@ public class velox {
                 resposta = JOptionPane.showConfirmDialog(
                         null,
                         formularioServico,
-                        "Criar Ticket",
+                        "Criar Ticket - Compra",
                         JOptionPane.OK_CANCEL_OPTION,
                         JOptionPane.PLAIN_MESSAGE
                 );
@@ -349,7 +356,161 @@ public class velox {
                         continue;
                     }
 
-                    idVeiculo = Integer.parseInt(idString);
+                    try (Connection conn = DriverManager.getConnection(URL,USER,PASS)){
+                        idVeiculo = Integer.parseInt(idString);
+
+                        String sql = "SELECT * FROM tb_estoque_veiculos WHERE id_veiculo = ?";
+
+                        PreparedStatement ps = conn.prepareStatement(sql);
+
+                        ps.setInt(1, idVeiculo);
+                        ResultSet rs = ps.executeQuery();
+
+                        if (rs.next()){
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "Veículo encontrado!!",
+                                    "Sucesso!",
+                                    JOptionPane.INFORMATION_MESSAGE
+                            );
+                        }else {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "O veículo não existe",
+                                    "Erro",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                            continue;
+                        }
+                    }catch(SQLException e){
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Erro ao conectar com o banco de dados",
+                                "Erro",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                    //Escolha de período
+                    int respostaPeriodo = JOptionPane.showOptionDialog(
+                            null,
+                            "Selecione o melhor período para entrarmos em contato!!",
+                            "Escolha o período",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            periodosDisponiveis,
+                            periodosDisponiveis[0]
+                    );
+
+                    if (respostaPeriodo == 0) {
+                        periodoPreferido = "Manhã";
+                    } else if (respostaPeriodo == 1) {
+                        periodoPreferido = "Tarde";
+                    } else if (respostaPeriodo == 2) {
+                        periodoPreferido = "Noite";
+                    }else {
+                        continue;
+                    }
+                    break;
+
+                } else {
+                    break;
+                }// Fim if else resposta = OK
+            }// Fim do while
+            if (resposta == JOptionPane.OK_OPTION) {
+                try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+                    String selectModeloVeiculo = "SELECT modelo_veiculo FROM tb_estoque_veiculos WHERE id_veiculo = ?";
+
+                    PreparedStatement psSelect = conn.prepareStatement(selectModeloVeiculo);
+
+                    psSelect.setInt(1, idVeiculo);
+                    ResultSet rs = psSelect.executeQuery();
+
+                    if (rs.next()){
+                        modeloVeiculo = rs.getString("modelo_veiculo");
+                    }
+
+                    String sql = "INSERT INTO tb_tickets (id_usuario, id_veiculo, tipo_servico, modelo_veiculo, data_preferida, periodo, descricao_problema, status_ticket)" +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, 'Aberto')";
+
+                    PreparedStatement ps = conn.prepareStatement(sql);
+
+                    ps.setInt(1, idUsuario);
+                    ps.setInt(2, idVeiculo);
+                    ps.setString(3, tipoServico);
+                    ps.setString(4, modeloVeiculo);
+                    ps.setString(5, dataPreferida);
+                    ps.setString(6, periodoPreferido);
+                    ps.setString(7, descricaoProblema);
+
+                    int linhasAfetadas = ps.executeUpdate();
+
+                    if (linhasAfetadas > 0) {
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Ticket criado com sucesso!!",
+                                "Sucesso!",
+                                JOptionPane.INFORMATION_MESSAGE
+                        );
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Erro ao criar ticket!",
+                                "Erro!",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Erro ao conectar ao banco de dados: " + e.getMessage(),
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }//Fim try catch
+            } else {
+                JOptionPane.showMessageDialog(null, "Cancelando...", "Velox", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        //Se resposta for VENDA
+        } else if (respostaServico == 1) {
+            tipoServico = "Venda";
+
+            //Criação do formulário
+            JPanel formularioServico = new JPanel(new GridLayout(3, 2, 10, 10));
+            formularioServico.add(new JLabel("Modelo do veiculo: "));
+            formularioServico.add(campoModeloVeiculo);
+            formularioServico.add(new JLabel("Data preferida para contato (DD/MM/YYYY): "));
+            formularioServico.add(campoDataPreferida);
+            formularioServico.add(new JLabel("Descrição da venda: "));
+            formularioServico.add(campoDescricaoProblema);
+
+            while (true) {
+                resposta = JOptionPane.showConfirmDialog(
+                        null,
+                        formularioServico,
+                        "Criar Ticket - Venda",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.PLAIN_MESSAGE
+                );
+
+
+                if (resposta == JOptionPane.OK_OPTION) {
+                    modeloVeiculo = campoModeloVeiculo.getText();
+                    dataPreferida = campoDataPreferida.getText();
+                    descricaoProblema = campoDescricaoProblema.getText();
+
+                    //Verificando se todos os campos estão preenchidos
+                    if (modeloVeiculo.isEmpty() || dataPreferida.isEmpty() || descricaoProblema.isEmpty()) {
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Todos os campos são obrigatórios!!",
+                                "Erro",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                        continue;
+                    }
 
                     //Escolha de período
                     int respostaPeriodo = JOptionPane.showOptionDialog(
@@ -367,8 +528,10 @@ public class velox {
                         periodoPreferido = "Manhã";
                     } else if (respostaPeriodo == 1) {
                         periodoPreferido = "Tarde";
-                    } else {
+                    } else if (respostaPeriodo == 2) {
                         periodoPreferido = "Noite";
+                    }else {
+                        continue;
                     }
                     break;
 
@@ -376,16 +539,16 @@ public class velox {
                     break;
                 }// Fim if else resposta = OK
             }// Fim do while
-            if (resposta == JOptionPane.OK_OPTION){
-                try (Connection conn = DriverManager.getConnection(URL, USER, PASS)){
-                    String sql = "INSERT INTO tb_tickets (id_usuario, id_veiculo, tipo_servico, data_preferida, periodo, descricao_problema, status_ticket)" +
-                            "VALUES (?, ?, ?, ?, ?, ?, 'Aberto')";
+            if (resposta == JOptionPane.OK_OPTION) {
+                try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+                    String sql = "INSERT INTO tb_tickets (id_usuario, id_veiculo, tipo_servico, modelo_veiculo, data_preferida, periodo, descricao_problema, status_ticket)" +
+                            "VALUES (?, null, ?, ?, ?, ?, ?, 'Aberto')";
 
                     PreparedStatement ps = conn.prepareStatement(sql);
 
                     ps.setInt(1, idUsuario);
-                    ps.setInt(2, idVeiculo);
-                    ps.setString(3, tipoServico);
+                    ps.setString(2, tipoServico);
+                    ps.setString(3, modeloVeiculo);
                     ps.setString(4, dataPreferida);
                     ps.setString(5, periodoPreferido);
                     ps.setString(6, descricaoProblema);
@@ -399,7 +562,7 @@ public class velox {
                                 "Sucesso!",
                                 JOptionPane.INFORMATION_MESSAGE
                         );
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(
                                 null,
                                 "Erro ao criar ticket!",
@@ -408,7 +571,7 @@ public class velox {
                         );
                     }
 
-                }catch (SQLException e) {
+                } catch (SQLException e) {
                     JOptionPane.showMessageDialog(
                             null,
                             "Erro ao conectar ao banco de dados: " + e.getMessage(),
@@ -416,10 +579,120 @@ public class velox {
                             JOptionPane.ERROR_MESSAGE
                     );
                 }//Fim try catch
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Cancelando...", "Velox", JOptionPane.INFORMATION_MESSAGE);
             }
+        // Se resposta for CONSULTORIA
+        }else if (respostaServico == 2){
+            tipoServico = "Consultoria";
 
-        }//Fim do if respostaServico
+            //Criação do formulário
+            JPanel formularioServico = new JPanel(new GridLayout(3, 2, 10, 10));
+            formularioServico.add(new JLabel("Modelo do veiculo: "));
+            formularioServico.add(campoModeloVeiculo);
+            formularioServico.add(new JLabel("Data preferida para contato (DD/MM/YYYY): "));
+            formularioServico.add(campoDataPreferida);
+            formularioServico.add(new JLabel("Descrição da venda: "));
+            formularioServico.add(campoDescricaoProblema);
+
+            while (true) {
+                resposta = JOptionPane.showConfirmDialog(
+                        null,
+                        formularioServico,
+                        "Criar Ticket - Consultoria",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.PLAIN_MESSAGE
+                );
+
+
+                if (resposta == JOptionPane.OK_OPTION) {
+                    modeloVeiculo = campoModeloVeiculo.getText();
+                    dataPreferida = campoDataPreferida.getText();
+                    descricaoProblema = campoDescricaoProblema.getText();
+
+                    //Verificando se todos os campos estão preenchidos
+                    if (modeloVeiculo.isEmpty() || dataPreferida.isEmpty() || descricaoProblema.isEmpty()) {
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Todos os campos são obrigatórios!!",
+                                "Erro",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                        continue;
+                    }
+
+                    //Escolha de período
+                    int respostaPeriodo = JOptionPane.showOptionDialog(
+                            null,
+                            "Selecione o melhor período para entrarmos em contato!!",
+                            "Escolha o período",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            periodosDisponiveis,
+                            periodosDisponiveis[0]
+                    );
+
+                    if (respostaPeriodo == 0) {
+                        periodoPreferido = "Manhã";
+                    } else if (respostaPeriodo == 1) {
+                        periodoPreferido = "Tarde";
+                    } else if (respostaPeriodo == 2) {
+                        periodoPreferido = "Noite";
+                    }else {
+                        continue;
+                    }
+                    break;
+
+                } else {
+                    break;
+                }// Fim if else resposta = OK
+            }// Fim do while
+            if (resposta == JOptionPane.OK_OPTION) {
+                try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+                    String sql = "INSERT INTO tb_tickets (id_usuario, id_veiculo, tipo_servico, modelo_veiculo, data_preferida, periodo, descricao_problema, status_ticket)" +
+                            "VALUES (?, null, ?, ?, ?, ?, ?, 'Aberto')";
+
+                    PreparedStatement ps = conn.prepareStatement(sql);
+
+                    ps.setInt(1, idUsuario);
+                    ps.setString(2, tipoServico);
+                    ps.setString(3, modeloVeiculo);
+                    ps.setString(4, dataPreferida);
+                    ps.setString(5, periodoPreferido);
+                    ps.setString(6, descricaoProblema);
+
+                    int linhasAfetadas = ps.executeUpdate();
+
+                    if (linhasAfetadas > 0) {
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Ticket criado com sucesso!!",
+                                "Sucesso!",
+                                JOptionPane.INFORMATION_MESSAGE
+                        );
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Erro ao criar ticket!",
+                                "Erro!",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Erro ao conectar ao banco de dados: " + e.getMessage(),
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }//Fim try catch
+            } else {
+                JOptionPane.showMessageDialog(null, "Cancelando...", "Velox", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }else if (respostaServico == 3) {
+            JOptionPane.showMessageDialog(null, "Cancelando...");
+        }
     }//Fim do método criarTicket
 }//Fim da classe velox
