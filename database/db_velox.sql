@@ -38,6 +38,7 @@ CREATE TABLE tb_tickets(
     id_usuario INT NOT NULL,
     id_veiculo INT NULL,
     tipo_servico ENUM('Compra','Venda','Consultoria') NOT NULL,
+    modelo_veiculo VARCHAR(100),
     data_preferida VARCHAR(15) NOT NULL,
     periodo ENUM('Manhã', 'Tarde', 'Noite') NOT NULL,
     descricao_problema TEXT NOT NULL,
