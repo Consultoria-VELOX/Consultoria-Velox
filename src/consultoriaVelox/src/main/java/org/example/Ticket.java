@@ -230,7 +230,9 @@ public class Ticket {
                 sql = "SELECT * FROM tb_tickets";
             }
 
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(sql,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
 
             if (Sessao.cargo.equals("Cliente")) {
                 ps.setInt(1, Sessao.idUsuario);
@@ -239,51 +241,54 @@ public class Ticket {
 
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-
-                while (rs.next()) {
-                    int idTicket = rs.getInt("id_ticket");
-                    String tipoServico = rs.getString("tipo_servico");
-                    String modeloVeiculo = rs.getString("modelo_veiculo");
-                    String dataPreferida = rs.getString("data_preferida");
-                    String periodo = rs.getString("periodo");
-                    String descricaoProblema = rs.getString("descricao_problema");
-                    String statusTicket = rs.getString("status_ticket");
-
-                    verTickets += "ID Ticket: " + idTicket + "\n" +
-                            "Tipo de serviço: " + tipoServico + "\n" +
-                            "Modelo do veículo: " + modeloVeiculo + "\n" +
-                            "Data preferida: " + dataPreferida + "\n" +
-                            "Período: " + periodo + "\n" +
-                            "Descrição do problema: " + descricaoProblema + "\n" +
-                            "Status do ticket: " + statusTicket + "\n\n";
-                }//Fim while
-
-                // JTextArea para exibir o texto
-                JTextArea textArea = new JTextArea(verTickets);
-                textArea.setEditable(false);
-                textArea.setLineWrap(true);
-                textArea.setWrapStyleWord(true);
-
-                // JScrollPane envolve o textArea e adiciona o scroll
-                JScrollPane scrollPane = new JScrollPane(textArea);
-                scrollPane.setPreferredSize(new Dimension(600, 600));
-
-                JOptionPane.showMessageDialog(
-                        null,
-                        scrollPane,
-                        "Tickets",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-            } else {
+            if (!rs.next()) {
                 JOptionPane.showMessageDialog(
                         null,
                         "Nenhum ticket encontrado!",
                         "Tickets",
                         JOptionPane.INFORMATION_MESSAGE
                 );
-            }//Fim if else
-        } catch (SQLException e) {
+            }
+
+            // Volta o cursor para antes do primeiro registro
+            rs.beforeFirst();
+
+            while (rs.next()) {
+                int idTicket = rs.getInt("id_ticket");
+                String tipoServico = rs.getString("tipo_servico");
+                String modeloVeiculo = rs.getString("modelo_veiculo");
+                String dataPreferida = rs.getString("data_preferida");
+                String periodo = rs.getString("periodo");
+                String descricaoProblema = rs.getString("descricao_problema");
+                String statusTicket = rs.getString("status_ticket");
+
+                verTickets += "ID Ticket: " + idTicket + "\n" +
+                        "Tipo de serviço: " + tipoServico + "\n" +
+                        "Modelo do veículo: " + modeloVeiculo + "\n" +
+                        "Data preferida: " + dataPreferida + "\n" +
+                        "Período: " + periodo + "\n" +
+                        "Descrição do problema: " + descricaoProblema + "\n" +
+                        "Status do ticket: " + statusTicket + "\n\n";
+            }//Fim while
+
+            // JTextArea para exibir o texto
+            JTextArea textArea = new JTextArea(verTickets);
+            textArea.setEditable(false);
+            textArea.setLineWrap(true);
+            textArea.setWrapStyleWord(true);
+
+            // JScrollPane envolve o textArea e adiciona o scroll
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(600, 600));
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    scrollPane,
+                    "Tickets",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        } catch (
+                SQLException e) {
             JOptionPane.showMessageDialog(
                     null,
                     "Erro ao conectar ao banco de dados: " + e.getMessage(),
@@ -434,7 +439,7 @@ public class Ticket {
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }//Fim do try catch
-        }else if (resposta == 1){
+        } else if (resposta == 1) {
             int confirmarOpcao = JOptionPane.showConfirmDialog(
                     null,
                     "Tem certeza que deseja cancelar seu ticket?",
@@ -443,8 +448,8 @@ public class Ticket {
                     JOptionPane.QUESTION_MESSAGE
             );
 
-            if (confirmarOpcao == 0){
-                try (Connection conn = Conexao.conectar()){
+            if (confirmarOpcao == 0) {
+                try (Connection conn = Conexao.conectar()) {
                     String sql = "UPDATE tb_tickets SET status_ticket = 'Cancelado' WHERE id_ticket = ?";
 
                     PreparedStatement ps = conn.prepareStatement(sql);
@@ -454,13 +459,115 @@ public class Ticket {
 
                     if (linhasAlteradas > 0) {
                         JOptionPane.showMessageDialog(null, "Ticket cancelado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
-                    }else {
+                    } else {
                         JOptionPane.showMessageDialog(null, "Erro ao cancelar ticket", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
-                }catch (SQLException e){
-                    JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: "+e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }// Fim if resposta = Atualizar tickets
+
+
     }//Fim do método atualizarTicket();
-}//Fim da classe Ticket
+
+    public static void atualizarStatusTicket() {
+        String idString = "";
+        int idTicket = 0;
+
+        loopPrincipal:
+        while (true) {
+            loopIdTicket:
+            while (true) {
+                idString = JOptionPane.showInputDialog(null, "Insira o id do seu ticket", "Atualizar status do ticket", JOptionPane.QUESTION_MESSAGE);
+                if (idString != null) {
+                    try (Connection conn = Conexao.conectar()) {
+                        idTicket = Integer.parseInt(idString);
+                        String sql = "SELECT * FROM tb_tickets WHERE id_ticket = ?";
+
+                        PreparedStatement ps = conn.prepareStatement(sql);
+
+                        ps.setInt(1, idTicket);
+
+                        ResultSet rs = ps.executeQuery();
+
+                        if (rs.next()) {
+                            JOptionPane.showMessageDialog(null, "Ticket Encontrado!", "Sucesso!!", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "O ticket não existe!", "Erro", JOptionPane.ERROR_MESSAGE);
+                            continue;
+                        }
+                        break;
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    }//Fim try catch
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cancelando...");
+                    break loopPrincipal;
+                }//Fim if else botão cancelar
+
+            }//Fim loopIdTicket
+
+            try (Connection conn = Conexao.conectar()) {
+                String[] opcoesStatus = {"Aberto", "Em andamento", "Resolvido", "Cancelar Ticket", "Cancelar"};
+                String novoStatus = "";
+
+                int opcaoSelecionada = JOptionPane.showOptionDialog(
+                        null,
+                        "Selecione o novo status do ticket",
+                        "Atualizar Status",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        opcoesStatus,
+                        opcoesStatus[0]
+                );
+
+                if (opcaoSelecionada == 0) {
+                    novoStatus = "Aberto";
+                } else if (opcaoSelecionada == 1) {
+                    novoStatus = "Em Andamento";
+                } else if (opcaoSelecionada == 2) {
+                    novoStatus = "Resolvido";
+                } else if (opcaoSelecionada == 3) {
+                    novoStatus = "Cancelado";
+                } else {
+                    JOptionPane.showMessageDialog(null, "Encerrando...");
+                    break;
+                }
+
+                int confirmarOpcao = JOptionPane.showConfirmDialog(
+                        null,
+                        "Tem certeza que deseja alterar o status do ticket?",
+                        "Atualizar Status",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (confirmarOpcao == JOptionPane.OK_OPTION) {
+                    String sql = "UPDATE tb_tickets SET status_ticket = ? WHERE id_ticket = ?";
+
+                    PreparedStatement ps = conn.prepareStatement(sql);
+
+                    ps.setString(1, novoStatus);
+                    ps.setInt(2, idTicket);
+
+                    int linhasAlteradas = ps.executeUpdate();
+
+                    if (linhasAlteradas > 0) {
+                        JOptionPane.showMessageDialog(null, "Status do ticket atualizado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao atualizar ticket", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(null, "Cancelando...");
+                    break;
+                }
+
+                } catch(SQLException e){
+                    JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }//Fim do loopPrincipal
+        }//Fim do método atualizarStatusTicket()
+    }//Fim da classe Ticket

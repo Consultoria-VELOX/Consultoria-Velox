@@ -96,8 +96,6 @@ public class Usuario {
 
         if (resposta == JOptionPane.OK_OPTION) {
             try (Connection conn = Conexao.conectar();) {
-                System.out.println("Conectado com sucesso!");
-
                 String sql1 = "INSERT INTO tb_usuarios(nome_usuario, sobrenome_usuario, email, telefone, senha) VALUES (?, ?, ?, ?, ?)";
 
                 PreparedStatement ps = conn.prepareStatement(sql1);
@@ -137,13 +135,16 @@ public class Usuario {
                     idUsuario = rs.getInt("id_usuario");
                 }
 
-                String sql3 = ("INSERT INTO tb_usuario_cargo VALUES(?, ?)");
+                String sql3 = ("INSERT INTO tb_usuario_cargo (id_usuario, id_cargo) VALUES(?, ?)");
 
                 PreparedStatement ps3 = conn.prepareStatement(sql3);
 
                 ps3.setInt(1, idUsuario);
-                ps3.setInt(2, 1);
-
+                if (idUsuario == 1){
+                    ps3.setInt(2, 3);
+                }else {
+                    ps3.setInt(2, 1);
+                }
                 ps3.executeUpdate();
 
             } catch (SQLException e) {

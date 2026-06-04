@@ -11,7 +11,7 @@ public class Velox {
                 String[] opcoes = {"Cadastrar-se", "Logar-se", "Sair"};
                 int respostaRegistroLogin = JOptionPane.showOptionDialog(
                         null,
-                        "Seja bem vindo ao Velox!, Escolha uma opção",
+                        "Seja bem vindo ao Velox! Escolha uma opção",
                         "Cadastro/Login",
                         JOptionPane.DEFAULT_OPTION,
                         JOptionPane.QUESTION_MESSAGE,
@@ -21,10 +21,8 @@ public class Velox {
                 );
 
                 if (respostaRegistroLogin == 0) {
-                    JOptionPane.showMessageDialog(null, "Cadastro selecionado", "Velox", JOptionPane.INFORMATION_MESSAGE);
                     Usuario.cadastrarUsuario();
                 } else if (respostaRegistroLogin == 1) {
-                    JOptionPane.showMessageDialog(null, "Login selecionado", "Velox", JOptionPane.INFORMATION_MESSAGE);
                     Usuario.loginUsuario();
                 } else if (respostaRegistroLogin == 2) {
                     JOptionPane.showMessageDialog(null, "Encerrando...", "Velox", JOptionPane.INFORMATION_MESSAGE);
@@ -55,8 +53,38 @@ public class Velox {
                     } else if (respostaCliente == 2) {
                         Ticket.atualizarTicket();
                     }else if (respostaCliente == 3) {
-                        System.out.println("Ver estoque");
+                        Estoque.verEstoque();
                     }else if (respostaCliente == 4) {
+                        JOptionPane.showMessageDialog(null, "Volte logo...");
+                        Sessao.logado = false;
+                        Sessao.idUsuario = 0;
+                        Sessao.nomeUsuario = "";
+                    }//Fim if else escolhas
+                }else if (Sessao.cargo.equals("Gestor")){
+                    String[] opcoesGestor = {"Visualizar Tickets", "Atualizar status dos Tickets", "Ver Estoque", "Adicionar veículos ao Estoque", "Atualizar veículo do estoque", "Excluir veículos do estoque", "Sair da conta"};
+
+                    int respostaGestor = JOptionPane.showOptionDialog(
+                            null,
+                            "Olá " + Sessao.nomeUsuario + "! Escolha uma opção",
+                            "Opções",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            opcoesGestor,
+                            opcoesGestor[0]
+                    );
+
+                    if(respostaGestor == 0){ //Visualizar Tickets
+                        Ticket.verTickets();
+                    }else if(respostaGestor == 1){ //Atualizar status de tickets
+                        Ticket.atualizarStatusTicket();
+                    }else if(respostaGestor == 2){ //Ver estoque
+                        Estoque.verEstoque();
+                    }else if(respostaGestor == 3){ //Adicionar veículo ao estoque
+
+                    }else if(respostaGestor == 4){ //Deletar veículo do estoque
+
+                    }else if(respostaGestor == 5){ //Sair da conta
                         JOptionPane.showMessageDialog(null, "Volte logo...");
                         Sessao.logado = false;
                         Sessao.idUsuario = 0;
