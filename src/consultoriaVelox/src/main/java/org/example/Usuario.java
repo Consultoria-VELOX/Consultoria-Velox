@@ -69,7 +69,7 @@ public class Usuario {
                 );
                 continue;
             }//Fim do if
-            try (Connection conn = Conexao.conectar()){
+            try (Connection conn = Conexao.conectar()) {
                 String sql = "SELECT * FROM tb_usuarios WHERE email = ?";
 
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -88,7 +88,7 @@ public class Usuario {
                     );
                     continue;
                 }// Fim if else
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
             break;
@@ -172,7 +172,7 @@ public class Usuario {
             }//Fim if
 
             emailFornecido = campoEmail.getText();
-            senhaFornecida = new String (campoSenha.getPassword());
+            senhaFornecida = new String(campoSenha.getPassword());
 
             if (emailFornecido.isEmpty() || senhaFornecida.isEmpty()) {
                 JOptionPane.showMessageDialog(
@@ -234,4 +234,145 @@ public class Usuario {
             }//Fim do if else escolha
         }//Fim do while logado
     }//Fim método loginUsuario()
+
+    public static void listarUsuarios() {
+        String verUsuarios = "";
+        loopPrincipal:
+        while (true) {
+            try (Connection conn = Conexao.conectar()) {
+                String sql = "SELECT * FROM tb_usuarios";
+
+                PreparedStatement ps = conn.prepareStatement(sql);
+
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    int idUsuario = rs.getInt("id_usuario");
+                    String nomeUsuario = rs.getString("nome_usuario") + " " + rs.getString("sobrenome_usuario");
+                    String emailUsuario = rs.getString("email");
+                    String telefoneUsuario = rs.getString("telefone");
+
+                    verUsuarios += "Id do Usuário: " + idUsuario + "\n" +
+                            "Nome do Usuário: " + nomeUsuario + "\n" +
+                            "Email do Usuário: " + emailUsuario + "\n" +
+                            "Telefone do Usuário: " + telefoneUsuario + "\n\n";
+                }//Fim while
+
+                // JTextArea para exibir o texto
+                JTextArea textArea = new JTextArea(verUsuarios);
+                textArea.setEditable(false);
+                textArea.setLineWrap(true);
+                textArea.setWrapStyleWord(true);
+
+                // JScrollPane envolve o textArea e adiciona o scroll
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                scrollPane.setPreferredSize(new Dimension(600, 600));
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        scrollPane,
+                        "Tickets",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Erro ao conectar ao banco de dados: " + e.getMessage(),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }// Fim try catch
+            break;
+        }
+    }//Fim do método listarUsuarios();
+
+    public static void mudarCargo() {
+        String idString = "";
+        int idUsuario = 0;
+        int novoCargo = 0;
+        String[] opcoesCargos = {"Gestor", "Cliente", "Cancelar"};
+
+        loopPrincipal:
+        while (true) {
+            while (true) {
+                idString = JOptionPane.showInputDialog(null, "Insira o id do usuário", "Alterar cargo de usuário", JOptionPane.QUESTION_MESSAGE);
+                if (idString != null) {
+                    try (Connection conn = Conexao.conectar()) {
+                        idUsuario = Integer.parseInt(idString);
+                        String sql = "SELECT * FROM tb_usuarios WHERE id_usuario = ?";
+
+                        PreparedStatement ps = conn.prepareStatement(sql);
+
+                        ps.setInt(1, idUsuario);
+
+                        ResultSet rs = ps.executeQuery();
+
+                        if (rs.next()) {
+                            JOptionPane.showMessageDialog(null, "Usuário Encontrado!", "Sucesso!!", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "O usuário não existe!", "Erro", JOptionPane.ERROR_MESSAGE);
+                            continue;
+                        }
+                        break;
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    }//Fim try catch
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cancelando...");
+                    break;
+                }//Fim if else botão cancelar
+            }//Fim do loop while de verificação
+
+            int opcaoSelecionada = JOptionPane.showOptionDialog(
+                    null,
+                    "Selecione o novo cargo do usuário",
+                    "Atualizar Cargo",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opcoesCargos,
+                    opcoesCargos[0]
+            );
+
+            if (opcaoSelecionada == 2) {
+                JOptionPane.showMessageDialog(null, "Encerrando...");
+                break;
+            }
+
+            int confirmacao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja alterar o cargo do cliente? ", "Excluir veículo", JOptionPane.OK_CANCEL_OPTION);
+
+            if (confirmacao == JOptionPane.OK_OPTION) {
+                if (opcaoSelecionada == 0) {
+                    novoCargo = 2;
+                } else if (opcaoSelecionada == 1) {
+                    novoCargo = 3;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Encerrando...");
+                break;
+            }
+
+            try (Connection conn = Conexao.conectar()) {
+                String sql = "UPDATE tb_usuario_cargo SET id_cargo = ? WHERE id_usuario = ?";
+
+                PreparedStatement ps = conn.prepareStatement(sql);
+
+                ps.setInt(1, novoCargo);
+                ps.setInt(2, idUsuario);
+
+                int linhasAlteradas = ps.executeUpdate();
+
+                if (linhasAlteradas > 0) {
+                    JOptionPane.showMessageDialog(null, "Cargo alterado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro ao alterar cargo!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+            break;
+        }//Fim do loopPrincipal
+    }//Fim do método mudarCargo();
 }

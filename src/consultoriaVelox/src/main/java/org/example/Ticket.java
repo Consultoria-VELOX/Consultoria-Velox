@@ -106,7 +106,7 @@ public class Ticket {
                         try (Connection conn = Conexao.conectar()) {
                             idVeiculo = Integer.parseInt(idString);
 
-                            String sql = "SELECT modelo_veiculo FROM tb_estoque_veiculos WHERE id_veiculo = ?";
+                            String sql = "SELECT modelo_veiculo FROM tb_estoque_veiculos WHERE id_veiculo = ? AND disponivel = 1";
 
                             PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -125,7 +125,7 @@ public class Ticket {
                             } else {
                                 JOptionPane.showMessageDialog(
                                         null,
-                                        "O veículo não existe",
+                                        "O veículo não existe ou está indisponível!",
                                         "Erro",
                                         JOptionPane.ERROR_MESSAGE
                                 );
@@ -233,9 +233,14 @@ public class Ticket {
         while (true) {
             try (Connection conn = Conexao.conectar()) {
                 if (Sessao.cargo.equals("Cliente")) {
-                    sql = "SELECT * FROM tb_tickets WHERE id_usuario = ? AND status_ticket != 'Resolvido' OR status_ticket != 'Cancelado'";
+                    sql = "SELECT t.id_ticket, t.id_usuario, t.id_veiculo, u.nome_usuario, u.sobrenome_usuario, u.email, u.telefone, t.tipo_servico, t.modelo_veiculo, t.data_preferida, t.periodo, t.descricao_problema, t.status_ticket  " +
+                            "FROM tb_tickets t " +
+                            "JOIN tb_usuarios u ON t.id_usuario = u.id_usuario " +
+                            "WHERE t.id_usuario = ? AND t.status_ticket <> 'Resolvido' AND t.status_ticket <> 'Cancelado'";
                 } else {
-                    sql = "SELECT * FROM tb_tickets";
+                    sql = "SELECT t.id_ticket, t.id_usuario, t.id_veiculo, u.nome_usuario, u.sobrenome_usuario, u.email, u.telefone, t.tipo_servico, t.modelo_veiculo, t.data_preferida, t.periodo, t.descricao_problema, t.status_ticket  " +
+                            "FROM tb_tickets t " +
+                            "JOIN tb_usuarios u ON t.id_usuario = u.id_usuario";
                 }
 
                 PreparedStatement ps = conn.prepareStatement(sql,
@@ -265,6 +270,11 @@ public class Ticket {
 
                 while (rs.next()) {
                     int idTicket = rs.getInt("id_ticket");
+                    int idUsuario = rs.getInt("id_usuario");
+                    int idVeiculo = rs.getInt("id_veiculo");
+                    String nomeUsuario = rs.getString("nome_usuario") + " " + rs.getString("sobrenome_usuario");
+                    String emailUsuario = rs.getString("email");
+                    String telefoneUsuario = rs.getString("telefone");
                     String tipoServico = rs.getString("tipo_servico");
                     String modeloVeiculo = rs.getString("modelo_veiculo");
                     String dataPreferida = rs.getString("data_preferida");
@@ -273,7 +283,12 @@ public class Ticket {
                     String statusTicket = rs.getString("status_ticket");
 
                     verTickets += "ID Ticket: " + idTicket + "\n" +
+                            "Id do Usuário: " + idUsuario + "\n" +
+                            "Nome do Usuário: " + nomeUsuario + "\n" +
+                            "Email do Usuário: " + emailUsuario + "\n" +
+                            "Telefone do Usuário: " + telefoneUsuario + "\n" +
                             "Tipo de serviço: " + tipoServico + "\n" +
+                            "Id do veículo: " + idVeiculo + "\n" +
                             "Modelo do veículo: " + modeloVeiculo + "\n" +
                             "Data preferida: " + dataPreferida + "\n" +
                             "Período: " + periodo + "\n" +
@@ -338,7 +353,7 @@ public class Ticket {
             );
 
             //Loop até o usuário inserir um id válido
-            if (resposta == 2){
+            if (resposta == 2) {
                 JOptionPane.showMessageDialog(null, "Cancelando...");
                 break;
             }
@@ -405,17 +420,14 @@ public class Ticket {
                         dataPreferidaNova = campoDataPreferida.getText();
                         descricaoProblemaNovo = campoDescricaoProblema.getText();
 
-                        if (dataPreferidaNova.isEmpty() || descricaoProblemaNovo.isEmpty()) {
-                            JOptionPane.showMessageDialog(
-                                    null,
-                                    "Todos os campos são obrigatórios!!",
-                                    "Erro",
-                                    JOptionPane.ERROR_MESSAGE
-                            );
-                            continue;
+                        if (dataPreferidaNova.isEmpty()) {
+                            dataPreferidaNova = dataPreferidaAtual;
+                        }
+                        if (descricaoProblemaNovo.isEmpty()) {
+                            descricaoProblemaNovo = descricaoProblemaAtual;
                         }
                         break;
-                    }else {
+                    } else {
                         JOptionPane.showMessageDialog(null, "Cancelando...");
                         break loopPrincipal;
                     }

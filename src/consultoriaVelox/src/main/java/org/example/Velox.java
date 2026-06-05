@@ -92,6 +92,42 @@ public class Velox {
                         Sessao.idUsuario = 0;
                         Sessao.nomeUsuario = "";
                     }
+                }else if (Sessao.cargo.equals("Administrador")){
+                    String[] opcoesAdmin = {"Alterar cargo de usuário", "Visualizar Usuários", "Visualizar Tickets", "Atualizar status dos Tickets", "Ver Estoque", "Adicionar veículos ao Estoque", "Atualizar veículo do estoque", "Excluir veículos do estoque", "Sair da conta"};
+
+                    int respostaAdmin = JOptionPane.showOptionDialog(
+                            null,
+                            "Olá " + Sessao.nomeUsuario + "! Escolha uma opção",
+                            "Opções",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            opcoesAdmin,
+                            opcoesAdmin[0]
+                    );
+
+                    if (respostaAdmin == 0) { //Mudar cargo de usuário
+                        Usuario.mudarCargo();
+                    }else if(respostaAdmin == 1){ //Visuaizar Usuários
+                        Usuario.listarUsuarios();
+                    }else if (respostaAdmin == 2) { //Visualizar Tickets
+                        Ticket.verTickets();
+                    } else if (respostaAdmin == 3) { //Atualizar status de tickets
+                        Ticket.atualizarStatusTicket();
+                    } else if (respostaAdmin == 4) { //Ver estoque
+                        Estoque.verEstoque();
+                    } else if (respostaAdmin == 5) { //Adicionar veículo ao estoque
+                        Estoque.adicionarVeiculo();
+                    } else if (respostaAdmin == 6) { //Atualizar veículo do estoque
+                        Estoque.atualizarVeiculo();
+                    } else if (respostaAdmin == 7) { //"Deletar" veículo do estoque
+                        Estoque.desativarVeiculo();
+                    } else if (respostaAdmin == 8) { //Sair da conta
+                        JOptionPane.showMessageDialog(null, "Volte logo...");
+                        Sessao.logado = false;
+                        Sessao.idUsuario = 0;
+                        Sessao.nomeUsuario = "";
+                    }
                 }
             }
         }
