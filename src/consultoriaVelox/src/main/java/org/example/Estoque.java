@@ -169,7 +169,7 @@ public class Estoque {
         }//Fim loop while
     }//Fim do método adicionarVeiculo
 
-    public static void atualizarVeiculo(){
+    public static void atualizarVeiculo() {
         String[] opcoes = {"Atualizar informações", "Cancelar"};
 
         JTextField marcaField = new JTextField();
@@ -207,7 +207,7 @@ public class Estoque {
             );
 
             //Loop até o usuário inserir um id válido
-            if (resposta == 2) {
+            if (resposta == 1) {
                 JOptionPane.showMessageDialog(null, "Cancelando...");
                 break;
             }
@@ -221,7 +221,7 @@ public class Estoque {
                 } else {
                     idVeiculo = Integer.parseInt(idString);
                     try (Connection conn = Conexao.conectar()) {
-                        String sql = "SELECT * FROM tb_tickets WHERE id_veiculo = ? AND disponivel = 1";
+                        String sql = "SELECT * FROM tb_estoque_veiculos WHERE id_veiculo = ? AND disponivel = 1";
 
                         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -233,68 +233,162 @@ public class Estoque {
                             JOptionPane.showMessageDialog(null, "Veículo encontrado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
                             marca = rs.getString("marca_veiculo");
                             modelo = rs.getString("modelo_veiculo");
-                            ano = rs.getInt("ano_veiculo");
+                            ano = rs.getInt("ano");
                             placa = rs.getString("placa_veiculo");
-                            preco = rs.getDouble("preco_veiculo");
-                            descricao = rs.getString("descricao_veiculo");
-
+                            preco = rs.getDouble("preco");
+                            descricao = rs.getString("descricao");
                         } else {
                             JOptionPane.showMessageDialog(null, "Veículo não existe, tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
                             continue;
                         }
-                        break;
                     } catch (SQLException e) {
                         JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                     }//Fim try catch
-
-                    JPanel formularioVeiculo = new JPanel(new GridLayout(6, 2, 10, 10));
-                    formularioVeiculo.add(new JLabel("Marca ("+marca+"):"));
-                    formularioVeiculo.add(marcaField);
-                    formularioVeiculo.add(new JLabel("Modelo("+modelo+"):"));
-                    formularioVeiculo.add(modeloField);
-                    formularioVeiculo.add(new JLabel("Ano("+ano+"):"));
-                    formularioVeiculo.add(anoField);
-                    formularioVeiculo.add(new JLabel("Placa("+placa+"):"));
-                    formularioVeiculo.add(placaField);
-                    formularioVeiculo.add(new JLabel("Preço("+preco+"):"));
-                    formularioVeiculo.add(precoField);
-                    formularioVeiculo.add(new JLabel("Descrição("+descricao+"):"));
-                    formularioVeiculo.add(descricaoField);
-
-                    while (true) {
-                        int respostaFormulario = JOptionPane.showConfirmDialog(
-                                null,
-                                formularioVeiculo,
-                                "Atualizar Veículo",
-                                JOptionPane.OK_CANCEL_OPTION,
-                                JOptionPane.PLAIN_MESSAGE
-                        );
-
-                        if (respostaFormulario == JOptionPane.OK_OPTION) {
-                            marcaNova = marcaField.getText();
-                            modeloNovo = modeloField.getText();
-                            anoNovo = Integer.parseInt(anoField.getText());
-                            placaNova = placaField.getText();
-                            precoNovo = Double.parseDouble(precoField.getText());
-                            descricaoNova = descricaoField.getText();
-
-                            if (dataPreferidaNova.isEmpty() || descricaoProblemaNovo.isEmpty()) {
-                                JOptionPane.showMessageDialog(
-                                        null,
-                                        "Todos os campos são obrigatórios!!",
-                                        "Erro",
-                                        JOptionPane.ERROR_MESSAGE
-                                );
-                                continue;
-                            }
-                            break;
-                        }else {
-                            JOptionPane.showMessageDialog(null, "Cancelando...");
-                            break loopPrincipal;
-                        }
-                    }//Fim do while
                 }
+                break;
             }// Fim loop while de verificação de id
+
+            //Criação do formulário exibindo registros que já estão no banco
+            JPanel formularioVeiculo = new JPanel(new GridLayout(6, 2, 10, 10));
+            formularioVeiculo.add(new JLabel("Marca (" + marca + "):"));
+            formularioVeiculo.add(marcaField);
+            formularioVeiculo.add(new JLabel("Modelo(" + modelo + "):"));
+            formularioVeiculo.add(modeloField);
+            formularioVeiculo.add(new JLabel("Ano(" + ano + "):"));
+            formularioVeiculo.add(anoField);
+            formularioVeiculo.add(new JLabel("Placa(" + placa + "):"));
+            formularioVeiculo.add(placaField);
+            formularioVeiculo.add(new JLabel("Preço(" + preco + "):"));
+            formularioVeiculo.add(precoField);
+            formularioVeiculo.add(new JLabel("Descrição(" + descricao + "):"));
+            formularioVeiculo.add(descricaoField);
+
+            int respostaFormulario = JOptionPane.showConfirmDialog(
+                    null,
+                    formularioVeiculo,
+                    "Atualizar Veículo",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.PLAIN_MESSAGE
+            );
+
+            if (respostaFormulario == JOptionPane.OK_OPTION) {
+                marcaNova = marcaField.getText();
+                modeloNovo = modeloField.getText();
+                String anoString = anoField.getText();
+                placaNova = placaField.getText();
+                String precoString = precoField.getText();
+                descricaoNova = descricaoField.getText();
+
+                if (marcaNova.isEmpty()) {
+                    marcaNova = marca;
+                }
+                if (modeloNovo.isEmpty()) {
+                    modeloNovo = modelo;
+                }
+                if (placaNova.isEmpty()) {
+                    placaNova = placa;
+                }
+                if (descricaoNova.isEmpty()) {
+                    descricaoNova = descricao;
+                }
+                if (anoString.isEmpty()) {
+                    anoNovo = ano;
+                } else {
+                    anoNovo = Integer.parseInt(anoString);
+                }
+
+                if (precoString.isEmpty()) {
+                    precoNovo = preco;
+                } else {
+                    precoNovo = Double.parseDouble(precoString);
+                }
+
+                try (Connection conn = Conexao.conectar()) {
+                    String sql = "UPDATE tb_estoque_veiculos SET marca_veiculo = ?, modelo_veiculo = ?, ano = ?, placa_veiculo = ?, preco = ?, descricao = ? WHERE id_veiculo = ?";
+
+                    PreparedStatement ps = conn.prepareStatement(sql);
+
+                    ps.setString(1, marcaNova);
+                    ps.setString(2, modeloNovo);
+                    ps.setInt(3, anoNovo);
+                    ps.setString(4, placaNova);
+                    ps.setDouble(5, precoNovo);
+                    ps.setString(6, descricaoNova);
+                    ps.setInt(7, idVeiculo);
+
+                    int linhasAlteradas = ps.executeUpdate();
+
+                    if (linhasAlteradas > 0) {
+                        JOptionPane.showMessageDialog(null, "Veículo atualizado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao atualizar veículo", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Cancelando...");
+                break;
+            }
         }//Fim loopPrincipal
+    }//Fim do método atualizarVeiculo();
+
+    public static void desativarVeiculo(){
+        int idVeiculo = 0;
+
+        loopPrincipal:
+        while(true) {
+            String idString = JOptionPane.showInputDialog(null, "Insira o id do veículo", "Atualizar veículo", JOptionPane.QUESTION_MESSAGE);
+
+            if (idString == null || idString.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Cancelando...");
+                break;
+            } else {
+                idVeiculo = Integer.parseInt(idString);
+
+                try (Connection conn = Conexao.conectar()) {
+                    String sql = "SELECT * FROM tb_estoque_veiculos WHERE id_veiculo = ? AND disponivel = 1";
+
+                    PreparedStatement ps = conn.prepareStatement(sql);
+
+                    ps.setInt(1, idVeiculo);
+
+                    ResultSet rs = ps.executeQuery();
+
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(null, "Veículo encontrado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Veículo não existe, tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        continue;
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }//Fim try catch
+
+                int confirmacao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o veículo do estoque? ", "Excluir veículo", JOptionPane.OK_CANCEL_OPTION);
+
+                if (confirmacao == JOptionPane.OK_OPTION){
+                    try (Connection conn = Conexao.conectar()){
+                        String sql = "UPDATE tb_estoque_veiculos SET disponivel = 0 WHERE id_veiculo = ?";
+
+                        PreparedStatement ps = conn.prepareStatement(sql);
+
+                        ps.setInt(1, idVeiculo);
+
+                        int linhasAlteradas = ps.executeUpdate();
+
+                        if (linhasAlteradas > 0) {
+                            JOptionPane.showMessageDialog(null,"Veículo excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Erro ao excluir veículo", "Erro", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }catch (SQLException e){
+                        JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);;
+                    }
+                }
+                break;
+            }
+        }
     }
 }//Fim da classe Estoque

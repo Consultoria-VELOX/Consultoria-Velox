@@ -16,10 +16,10 @@ nome_cargo VARCHAR(15) NOT NULL
 );
 
 CREATE TABLE tb_usuario_cargo (
-	id_usuario INT UNIQUE NOT NULL,
-    id_cargo INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES tb_usuarios(id_usuario),
-    FOREIGN KEY (id_cargo) REFERENCES tb_cargo(id_cargo)    
+id_usuario INT UNIQUE NOT NULL,
+id_cargo INT NOT NULL,
+FOREIGN KEY (id_usuario) REFERENCES tb_usuarios(id_usuario),
+FOREIGN KEY (id_cargo) REFERENCES tb_cargo(id_cargo)    
 );
 
 DELIMITER //
@@ -78,8 +78,6 @@ VALUES ('Admin', 'Velox', 'adminn@velox.com', '(00) 00000-0000', '123');
 INSERT INTO tb_usuarios (nome_usuario, sobrenome_usuario, email, telefone, senha)
 VALUES ('Gestor', 'Velox', 'gestor@velox.com', '(00) 00000-0000', '123');
 
-INSERT INTO tb_estoque_veiculos (marca_veiculo, modelo_veiculo, ano, preco, placa_veiculo, descricao, disponivel)
-VALUES ('Chevrolet', 'Corsa', '2008', 10000.00 , 'AAAAABC', 'Em perfeito estado', true);
 
 SELECT*FROM tb_usuarios;
 SELECT*FROM tb_usuario_cargo;
