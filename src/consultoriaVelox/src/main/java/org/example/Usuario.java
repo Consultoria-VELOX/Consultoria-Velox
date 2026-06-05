@@ -135,17 +135,6 @@ public class Usuario {
                     idUsuario = rs.getInt("id_usuario");
                 }
 
-                String sql3 = ("INSERT INTO tb_usuario_cargo (id_usuario, id_cargo) VALUES(?, ?)");
-
-                PreparedStatement ps3 = conn.prepareStatement(sql3);
-
-                ps3.setInt(1, idUsuario);
-                if (idUsuario == 1){
-                    ps3.setInt(2, 3);
-                }else {
-                    ps3.setInt(2, 1);
-                }
-                ps3.executeUpdate();
 
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);

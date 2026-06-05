@@ -46,6 +46,7 @@ CREATE TABLE tb_estoque_veiculos (
     ano INT NOT NULL,
     placa_veiculo CHAR(7) NOT NULL UNIQUE,
     preco DOUBLE(8,2) NOT NULL,
+    imagem_veiculo LONGBLOB NULL,
     descricao TEXT NOT NULL,
     disponivel BOOLEAN NOT NULL
 );

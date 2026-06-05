@@ -81,10 +81,12 @@ public class Velox {
                     }else if(respostaGestor == 2){ //Ver estoque
                         Estoque.verEstoque();
                     }else if(respostaGestor == 3){ //Adicionar veículo ao estoque
+                        Estoque.adicionarVeiculo();
+                    }else if(respostaGestor == 4){ //Atualizar veículo do estoque
 
-                    }else if(respostaGestor == 4){ //Deletar veículo do estoque
+                    }else if(respostaGestor == 5){ //Deletar veículo do estoque
 
-                    }else if(respostaGestor == 5){ //Sair da conta
+                    }else if(respostaGestor == 6){ //Sair da conta
                         JOptionPane.showMessageDialog(null, "Volte logo...");
                         Sessao.logado = false;
                         Sessao.idUsuario = 0;
