@@ -3,9 +3,11 @@ package org.example;
 import javax.swing.*;
 
 public class Velox {
+
     public static void main(String[] args) {
 
-        loopPrincipal: while(true) {
+        loopPrincipal:
+        while (true) {
             //Cadastro e login
             while (Sessao.logado == false) {
                 String[] opcoes = {"Cadastrar-se", "Logar-se", "Sair"};
@@ -30,10 +32,9 @@ public class Velox {
                 }//Fim if else de login
             }// Fim do while logado
 
-
             while (Sessao.logado == true) {
                 if (Sessao.cargo.equals("Cliente")) {
-                    String[] opcoesCliente = {"Criar Ticket", "Meus Tickets", "Atualizar ticket","Ver Estoque", "Sair da conta"};
+                    String[] opcoesCliente = {"Criar Ticket", "Meus Tickets", "Atualizar ticket", "Ver Estoque", "Sair da conta"};
 
                     int respostaCliente = JOptionPane.showOptionDialog(
                             null,
@@ -52,15 +53,15 @@ public class Velox {
                         Ticket.verTickets();
                     } else if (respostaCliente == 2) {
                         Ticket.atualizarTicket();
-                    }else if (respostaCliente == 3) {
+                    } else if (respostaCliente == 3) {
                         Estoque.verEstoque();
-                    }else if (respostaCliente == 4) {
+                    } else if (respostaCliente == 4) {
                         JOptionPane.showMessageDialog(null, "Volte logo...");
                         Sessao.logado = false;
                         Sessao.idUsuario = 0;
                         Sessao.nomeUsuario = "";
                     }//Fim if else escolhas
-                }else if (Sessao.cargo.equals("Gestor")){
+                } else if (Sessao.cargo.equals("Gestor")) {
                     String[] opcoesGestor = {"Visualizar Tickets", "Atualizar status dos Tickets", "Ver Estoque", "Adicionar veículos ao Estoque", "Atualizar veículo do estoque", "Excluir veículos do estoque", "Sair da conta"};
 
                     int respostaGestor = JOptionPane.showOptionDialog(
@@ -74,60 +75,157 @@ public class Velox {
                             opcoesGestor[0]
                     );
 
-                    if(respostaGestor == 0){ //Visualizar Tickets
+                    if (respostaGestor == 0) { //Visualizar Tickets
                         Ticket.verTickets();
-                    }else if(respostaGestor == 1){ //Atualizar status de tickets
+                    } else if (respostaGestor == 1) { //Atualizar status de tickets
                         Ticket.atualizarStatusTicket();
-                    }else if(respostaGestor == 2){ //Ver estoque
+                    } else if (respostaGestor == 2) { //Ver estoque
                         Estoque.verEstoque();
-                    }else if(respostaGestor == 3){ //Adicionar veículo ao estoque
+                    } else if (respostaGestor == 3) { //Adicionar veículo ao estoque
                         Estoque.adicionarVeiculo();
-                    }else if(respostaGestor == 4){ //Atualizar veículo do estoque
+                    } else if (respostaGestor == 4) { //Atualizar veículo do estoque
                         Estoque.atualizarVeiculo();
-                    }else if(respostaGestor == 5){ //"Deletar" veículo do estoque
+                    } else if (respostaGestor == 5) { //"Deletar" veículo do estoque
                         Estoque.desativarVeiculo();
-                    }else if(respostaGestor == 6){ //Sair da conta
+                    } else if (respostaGestor == 6) { //Sair da conta
                         JOptionPane.showMessageDialog(null, "Volte logo...");
                         Sessao.logado = false;
                         Sessao.idUsuario = 0;
                         Sessao.nomeUsuario = "";
                     }
-                }else if (Sessao.cargo.equals("Administrador")){
-                    String[] opcoesAdmin = {"Alterar cargo de usuário", "Visualizar Usuários", "Visualizar Tickets", "Atualizar status dos Tickets", "Ver Estoque", "Adicionar veículos ao Estoque", "Atualizar veículo do estoque", "Excluir veículos do estoque", "Sair da conta"};
+                } else if (Sessao.cargo.equals("Administrador")) {
+                    String[] opcoesCategoria = {"Opções de Usuários", "Opções de Tickets", "Opções de Estoque", "Sair da conta"};
+                    //String[] opcoesAdmin;
+                    //= {"Alterar cargo de usuário", "Visualizar Usuários", "Visualizar Tickets", "Atualizar status dos Tickets", "Ver Estoque", "Adicionar veículos ao Estoque", "Atualizar veículo do estoque", "Excluir veículos do estoque", "Sair da conta"};
 
-                    int respostaAdmin = JOptionPane.showOptionDialog(
-                            null,
-                            "Olá " + Sessao.nomeUsuario + "! Escolha uma opção",
-                            "Opções",
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.QUESTION_MESSAGE,
-                            null,
-                            opcoesAdmin,
-                            opcoesAdmin[0]
-                    );
+                    while (true) {
+
+                        int respostaCategoria = JOptionPane.showOptionDialog(
+                                null,
+                                "Olá " + Sessao.nomeUsuario + "! Escolha uma opção",
+                                "Opções",
+                                JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                opcoesCategoria,
+                                opcoesCategoria[0]
+                        );
+
+                        if (respostaCategoria == 0) {
+                            String[] opcoesAdmin = {"Listar Usuários", "Alterar cargo de usuário", "Voltar"};
+
+                            loopUsuario:
+                            while (true) {
+                                int respostaAdmin = JOptionPane.showOptionDialog(
+                                        null,
+                                        "Escolha uma opção",
+                                        "Opções",
+                                        JOptionPane.DEFAULT_OPTION,
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null,
+                                        opcoesAdmin,
+                                        opcoesAdmin[0]
+                                );
+
+                                switch (respostaAdmin) {
+                                    case 0 ->
+                                        Usuario.listarUsuarios();
+                                    case 1 ->
+                                        Usuario.mudarCargo();
+                                    default -> {
+                                        break loopUsuario;
+                                    }
+                                }
+                            }//Fim loopUsuario
+                        } else if (respostaCategoria == 1) {
+                            String[] opcoesAdmin = {"Visualizar Tickets", "Atualizar status dos Tickets", "Voltar"};
+
+                            loopTickets:
+                            while (true) {
+                                int respostaAdmin = JOptionPane.showOptionDialog(
+                                        null,
+                                        "Escolha uma opção",
+                                        "Opções",
+                                        JOptionPane.DEFAULT_OPTION,
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null,
+                                        opcoesAdmin,
+                                        opcoesAdmin[0]
+                                );
+
+                                switch (respostaAdmin) {
+                                    case 0 ->
+                                        Ticket.verTickets();
+                                    case 1 ->
+                                        Ticket.atualizarStatusTicket();
+                                    default -> {
+                                        break loopTickets;
+                                    }
+                                }
+                            }//Fim loopTickets
+                        } else if (respostaCategoria == 2) {
+                            String[] opcoesAdmin = {"Ver Estoque", "Adicionar veículos ao Estoque", "Atualizar veículo do estoque", "Excluir veículos do estoque", "Voltar"};
+
+                            loopEstoque:
+                            while (true) {
+                                int respostaAdmin = JOptionPane.showOptionDialog(
+                                        null,
+                                        "Escolha uma opção",
+                                        "Opções",
+                                        JOptionPane.DEFAULT_OPTION,
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null,
+                                        opcoesAdmin,
+                                        opcoesAdmin[0]
+                                );
+
+                                switch (respostaAdmin) {
+                                    case 0 ->
+                                        Estoque.verEstoque();
+                                    case 1 ->
+                                        Estoque.adicionarVeiculo();
+                                    case 2 ->
+                                        Estoque.atualizarVeiculo();
+                                    case 3 ->
+                                        Estoque.desativarVeiculo();
+                                    default -> {
+                                        break loopEstoque;
+                                    }
+                                }
+                            }//Fim loopEstoque
+                        } else if (respostaCategoria == 3) {
+                            JOptionPane.showMessageDialog(null, "Volte logo...");
+                            Sessao.logado = false;
+                            Sessao.idUsuario = 0;
+                            Sessao.nomeUsuario = "";
+                            break;
+                        }
+                    }
+                    /* 
 
                     if (respostaAdmin == 0) { //Mudar cargo de usuário
-                        Usuario.mudarCargo();
-                    }else if(respostaAdmin == 1){ //Visuaizar Usuários
-                        Usuario.listarUsuarios();
-                    }else if (respostaAdmin == 2) { //Visualizar Tickets
-                        Ticket.verTickets();
+
+                    } else if (respostaAdmin == 1) { //Visuaizar Usuários
+
+                    } else if (respostaAdmin == 2) { //Visualizar Tickets
+                        
                     } else if (respostaAdmin == 3) { //Atualizar status de tickets
-                        Ticket.atualizarStatusTicket();
+                        
                     } else if (respostaAdmin == 4) { //Ver estoque
-                        Estoque.verEstoque();
+                        
                     } else if (respostaAdmin == 5) { //Adicionar veículo ao estoque
-                        Estoque.adicionarVeiculo();
+                        
                     } else if (respostaAdmin == 6) { //Atualizar veículo do estoque
-                        Estoque.atualizarVeiculo();
+                        
                     } else if (respostaAdmin == 7) { //"Deletar" veículo do estoque
-                        Estoque.desativarVeiculo();
+                        
                     } else if (respostaAdmin == 8) { //Sair da conta
                         JOptionPane.showMessageDialog(null, "Volte logo...");
                         Sessao.logado = false;
                         Sessao.idUsuario = 0;
                         Sessao.nomeUsuario = "";
                     }
+                     */
                 }
             }
         }
