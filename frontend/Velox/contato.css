@@ -1,0 +1,227 @@
+
+.heroi-contato {
+    background: linear-gradient(rgba(30, 46, 119, 0.85), rgba(30, 46, 119, 0.85)), url('img/carro.jpg.png') center/cover;
+    background-color: var(--cor-azul-escuro);
+    padding: 80px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--cor-branca);
+}
+
+
+.secao-contato-principal {
+    padding: 80px 0;
+    background-color: #fdfdfd;
+}
+
+.grid-contato-pagina {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 50px;
+    align-items: start;
+}
+
+
+.blocos-info-esquerda {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.card-info-pagina {
+    background-color: var(--cor-branca);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    border-left: 5px solid var(--cor-primaria);
+    transition: transform 0.3s ease;
+}
+
+.card-info-pagina:hover {
+    transform: translateX(5px);
+}
+
+.icone-info {
+    font-size: 28px;
+    background-color: var(--cor-cinza-claro);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.card-info-pagina h3 {
+    color: var(--cor-azul-escuro);
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.card-info-pagina p {
+    color: var(--cor-texto-escuro);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.link-whatsapp-btn {
+    display: inline-block;
+    margin-top: 10px;
+    color: #25D366;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+.link-whatsapp-btn:hover {
+    opacity: 0.8;
+}
+
+
+.container-formulario {
+    background-color: var(--cor-branca);
+    padding: 45px;
+    border-radius: 20px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+}
+
+.container-formulario h2 {
+    color: var(--cor-azul-escuro);
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.container-formulario p {
+    color: var(--cor-cinza);
+    font-size: 15px;
+    margin-bottom: 35px;
+}
+
+
+.grupo-campo {
+    margin-bottom: 22px;
+}
+
+.grupo-campo label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cor-azul-escuro);
+}
+
+.grupo-campo input,
+.grupo-campo select,
+.grupo-campo textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--cor-texto-escuro);
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+}
+
+.grupo-campo input:focus,
+.grupo-campo select:focus,
+.grupo-campo textarea:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    background-color: var(--cor-branca);
+    box-shadow: 0 0 0 4px rgba(58, 90, 230, 0.15);
+}
+
+
+.btn-enviar-form {
+    background-color: var(--cor-primaria);
+    color: var(--cor-branca);
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-enviar-form:hover {
+    background-color: #2845c2;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(58, 90, 230, 0.3);
+}
+
+
+.status-mensagem {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+    display: none;
+    font-weight: 500;
+}
+
+.status-mensagem.sucesso {
+    display: block;
+    background-color: #def7ec;
+    color: #03543f;
+    border: 1px solid #bcefdd;
+}
+
+.status-mensagem.erro {
+    display: block;
+    background-color: #fde8e8;
+    color: #9b1c1c;
+    border: 1px solid #f8b4b4;
+}
+
+
+.secao-mapa {
+    padding: 60px 0 80px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.secao-mapa h2 {
+    color: var(--cor-azul-escuro);
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.margin-bottom-mapa {
+    margin-bottom: 35px;
+    color: var(--cor-texto-escuro);
+}
+
+.mapa-wrapper {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+
+@media (max-width: 992px) {
+    .grid-contato-pagina {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-formulario {
+        padding: 25px 20px;
+    }
+    .card-info-pagina {
+        padding: 20px;
+    }
+}
