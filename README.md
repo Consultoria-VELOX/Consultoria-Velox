@@ -118,5 +118,3 @@ O banco é composto por 5 tabelas:
 | Instituição | UNISENAI — Campus SCS Boa Vista |
 | Curso | Tecnólogo em Análise e Desenvolvimento de Sistemas |
 | Componente | Projeto Integrador — 1º Semestre |
-| Professores | Daniel, Luiz, Luyra e Roberto |
-| Apresentação | Semana de 12 de junho de 2026 |
