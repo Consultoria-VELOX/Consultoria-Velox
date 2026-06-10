@@ -1,0 +1,144 @@
+.btn-menu-painel-gatilho {
+    background-color: #3A5AE6;
+    color: #ffffff;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-menu-painel-gatilho:hover {
+    background-color: #2544c4;
+    transform: scale(1.05);
+}
+.menu-lateral-painel {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 290px;
+    height: 100vh;
+    background-color: #1E2E77;
+    z-index: 9999;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.4s cubic-bezier(0.05, 0.74, 0.2, 1);
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
+}
+.menu-lateral-painel.aberto {
+    right: 0;
+}
+.topo-menu-lateral {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 15px;
+}
+.logo-menu-lat {
+    height: 50px;
+}
+.btn-fechar-menu {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+.divisor-menu-lat {
+    border: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.15);
+    margin-bottom: 25px;
+}
+.links-menu-lat {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+.item-menu-lat {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.2s;
+}
+.item-menu-lat i {
+    font-size: 17px;
+    width: 22px;
+}
+.item-menu-lat:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.rodape-usuario-lat {
+    background-color: rgba(0, 0, 0, 0.18);
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+.usuario-info-lat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+}
+.avatar-lat {
+    width: 38px;
+    height: 38px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+.dados-texto-lat {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.nome-lat {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 13px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.email-lat {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 11px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.btn-sair-lat {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+}
+.btn-sair-lat:hover {
+    color: #FF4D4D;
+    transform: scale(1.1);
+}
+@media (max-width: 768px) {
+    .btn-menu-painel-gatilho {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

@@ -199,37 +199,10 @@ public class Velox {
                             Sessao.idUsuario = 0;
                             Sessao.nomeUsuario = "";
                             break;
-                        }
-                    }
-                    /* 
-
-                    if (respostaAdmin == 0) { //Mudar cargo de usuário
-
-                    } else if (respostaAdmin == 1) { //Visuaizar Usuários
-
-                    } else if (respostaAdmin == 2) { //Visualizar Tickets
-                        
-                    } else if (respostaAdmin == 3) { //Atualizar status de tickets
-                        
-                    } else if (respostaAdmin == 4) { //Ver estoque
-                        
-                    } else if (respostaAdmin == 5) { //Adicionar veículo ao estoque
-                        
-                    } else if (respostaAdmin == 6) { //Atualizar veículo do estoque
-                        
-                    } else if (respostaAdmin == 7) { //"Deletar" veículo do estoque
-                        
-                    } else if (respostaAdmin == 8) { //Sair da conta
-                        JOptionPane.showMessageDialog(null, "Volte logo...");
-                        Sessao.logado = false;
-                        Sessao.idUsuario = 0;
-                        Sessao.nomeUsuario = "";
-                    }
-                     */
-                }
-            }
-        }
-
-    }// Fim do método main
-
+                        }///Fim if else de respostaCategoria
+                    }//Fim do loop de escolha de categoria
+                }//Fim if else de opções por cargo
+            }//Fim do loop de logado
+        }//Fim do loopPrincipal
+    }// Fim do método mai
 }//Fim da classe velox

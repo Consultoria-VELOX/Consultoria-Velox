@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque - Velox Consultoria Automotiva</title>
+    <link rel="stylesheet" href="estoque.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../menu-lateral/lateral.css">
+</head>
+<body>
+   
+    <header class="cabecalho">
+        <div class="container-nav">
+            <div class="logo">
+                <img src="../img/logovelox.png" alt="Logo Velox">
+            </div>
+            <nav class="navegacao">
+                <button class="botao-menu" id="botaoMenu">☰</button>
+                <ul class="menu" id="menu">
+                    <li><a href="../index.html">Início</a></li>
+                    <li><a href="../orçamento/solicitacao.html">Solicitar Orçamento</a></li>
+                    <li><a href="../Estoque/estoque.html">Estoque</a></li>
+                    <li><a href="../contato/contato.html">Contato</a></li>
+                    <li><button id="btnAuthHeader" class="btn-menu-painel-gatilho" onclick="window.location.href='../login/login.html'">Entrar</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="heroi-estoque">
+        <div class="heroi-estoque-conteudo">
+            <h1>ESTOQUE</h1>
+            <p>Explore nossa coleção premium de veículos disponíveis</p>
+        </div>
+    </div>
+
+    <section class="secao-estoque">
+        <div class="container">
+          <div class="secao-estoque-header">
+    <button class="btn-adicionar-dinamico" id="btnAdicionarCarro" style="display: none;">
+        <i class="fas fa-plus"></i> Adicionar Carro
+    </button>
+</div>
+            
+            <div id="gridEstoqueContem" class="grid-estoque">
+                <div class="card-carro">
+                    <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=500" alt="BMW">
+                    <h3>BMW Série 3 Mk7 G20</h3>
+                    <div class="preco">R$ 280.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2022</span>
+                        <span><i class="fa-solid fa-gauge"></i> 21000</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="0">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://thegarage.com.br/wp-content/uploads/2025/04/2017-audi-a4-a-venda-the-garage-33.jpg" alt="Audi">
+                    <h3>Audi A4 Avant</h3>
+                    <div class="preco">R$ 245.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2020</span>
+                        <span><i class="fa-solid fa-gauge"></i> 43000</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="1">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=500" alt="Mercedes">
+                    <h3>Mercedes-Benz C300 AMG</h3>
+                    <div class="preco">R$ 310.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2022</span>
+                        <span><i class="fa-solid fa-gauge"></i> 18500</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="2">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&q=80&w=500" alt="Porsche">
+                    <h3>Porsche Macan T</h3>
+                    <div class="preco">R$ 520.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2023</span>
+                        <span><i class="fa-solid fa-gauge"></i> 9800</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="3">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=500" alt="Ford">
+                    <h3>Ford Mustang GT</h3>
+                    <div class="preco">R$ 415.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2021</span>
+                        <span><i class="fa-solid fa-gauge"></i> 15000</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="4">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=500" alt="Porsche">
+                    <h3>Porsche 911 Carrera S</h3>
+                    <div class="preco">R$ 890.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2022</span>
+                        <span><i class="fa-solid fa-gauge"></i> 7400</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="5">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://cdn.motor1.com/images/mgl/eooA2W/s1/audi-q3-sportback-performance-black-2.0t-quattro-2023.webp" alt="Audi">
+                    <h3>Audi Q3 Sportback</h3>
+                    <div class="preco">R$ 275.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2022</span>
+                        <span><i class="fa-solid fa-gauge"></i> 24000</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="6">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://cdn.motor1.com/images/mgl/Yn6GJ/s1/1x1/volvo-xc60-t8-hybrid.webp" alt="Volvo">
+                    <h3>Volvo XC60 T8 Hybrid</h3>
+                    <div class="preco">R$ 340.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2021</span>
+                        <span><i class="fa-solid fa-gauge"></i> 31000</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="7">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGp6ftFX1nJ2Un3hmibaUMzWNX8bkv6wfeww&s" alt="Land Rover">
+                    <h3>Range Rover Evoque</h3>
+                    <div class="preco">R$ 295.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2020</span>
+                        <span><i class="fa-solid fa-gauge"></i> 38000</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="8">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://cdn.motor1.com/images/mgl/jAG66/s3/chevrolet-camaro-ss.jpg" alt="Chevrolet">
+                    <h3>Chevrolet Camaro SS</h3>
+                    <div class="preco">R$ 380.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2021</span>
+                        <span><i class="fa-solid fa-gauge"></i> 19000</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="9">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQrJJznvC6_ftXWuT5VutHz3QEnV350Ipsvw&s" alt="Toyota">
+                    <h3>Toyota SW4 Diamond</h3>
+                    <div class="preco">R$ 365.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2022</span>
+                        <span><i class="fa-solid fa-gauge"></i> 28500</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="10">Veja Mais</button>
+                </div>
+
+                <div class="card-carro">
+                    <img src="https://cdn.motor1.com/images/mgl/NGekMj/504:0:3024:2268/avaliacao-jeep-commander-overland-1.3-t270-at6-4x2.webp" alt="Jeep">
+                    <h3>Jeep Commander Overland</h3>
+                    <div class="preco">R$ 230.000,00</div>
+                    <div class="carro-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> 2023</span>
+                        <span><i class="fa-solid fa-gauge"></i> 14000</span>
+                    </div>
+                    <button class="btn-veja-mais" data-index="11">Veja Mais</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="modalCarro">
+        <div class="conteudo-modal">
+            <button class="fechar-modal" id="fecharModal">&times;</button>
+            <div class="detalhes-modal-corpo">
+                <div class="modal-imagem">
+                    <img src="" id="modalImg" alt="Carro Selecionado">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modalNome">BMW Série 3</h2>
+                    <h3 id="modalPreco" class="preco-destaque">R$ 0.00</h3>
+                    
+                    <div class="caracteristicas-detalhadas">
+                        <div class="item-caract"><i class="fa-solid fa-calendar-days"></i> Ano: <span id="modalAno">0000</span></div>
+                        <div class="item-caract"><i class="fa-solid fa-gauge"></i> KM: <span id="modalKm">0</span></div>
+                        <div class="item-caract"><i class="fa-solid fa-gas-pump"></i> Combustível: <span>Flex</span></div>
+                        <div class="item-caract"><i class="fa-solid fa-gears"></i> Câmbio: <span>Automático</span></div>
+                    </div>
+                    
+                    <p id="modalDescricao">Detalhes adicionais sobre o veículo...</p>
+                    
+                    <a href="#" id="btnWhatsModal" target="_blank" class="btn-whatsapp-modal">
+                        <i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="rodape">
+        <div class="container">
+            <div class="conteudo-rodape">
+                <div class="info-rodape">
+                    <img src="../img/logovelox.png" alt="Logo Velox" class="logo-rodape">
+                    A Velox é sua parceira de confiança em consultoria automotiva. Com profissionalismo, transparência e dedicação, transformamos sonhos em realidade no mercado de veículos premium.
+                </div>
+               <div class="links-rodape">
+                    <h4>Links Rápidos</h4>
+                    <a href="../index.html">Início</a>
+                    <a href="../index.html#sobre">Sobre Nós</a>
+                    <a href="../index.html#servicos">Serviços</a>
+                    <a href="../index.html#contato">Contato</a>
+                </div>
+                <div class="link-politica">
+                    <h4>Informações</h4>
+                    <a href="#politica">Política de Privacidade</a>
+                    <a href="#termos">Termos de Uso</a>
+                </div>
+            </div>
+            <div class="rodape-final">
+                <div class="redes-sociais">
+                    <a href="https://facebook.com/" title="Facebook">f</a>
+                    <a href="https://instagram.com/" title="Instagram">📷</a>
+                    <a href="https://wa.me/5511981090128" title="WhatsApp">💬</a>
+                </div>
+                <p class="copyright">&copy; 2026 Velox Consultoria Automotiva. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="estoque.js"></script>
+    <script src="../menu-lateral/lateral.js"></script>
+    <script>

@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Velox - Consultoria Automotiva</title>
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="stylesheet" href="../Velox/index/estilo.css">
+   <link rel="stylesheet" href="../Velox/menu-lateral/lateral.css">
 </head>
 <body>
    
-    <header class="cabecalho">
+   <header class="cabecalho">
         <div class="container-nav">
             <div class="logo">
-                <img src="img/logovelox.png" alt="Logo Velox">
-                
+                <img src="../Velox/img/logovelox.png" alt="Logo Velox">
             </div>
             <nav class="navegacao">
                 <button class="botao-menu" id="botaoMenu">☰</button>
                 <ul class="menu" id="menu">
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="solicitacao.html">Solicitar Orçamento</a></li>
-                    <li><a href="estoque.html">Estoque</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                    <li><button class="btn-registrar" onclick="window.location.href='autenticacao/registro.html'">Registrar</button></li>
-                    <li><button class="btn-entrar" onclick="window.location.href='autenticacao/login.html'">Entrar</button></li>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="../Velox/orçamento/solicitacao.html">Solicitar Orçamento</a></li>
+                    <li><a href="../Velox/Estoque/estoque.html">Estoque</a></li>
+                    <li><a href="../Velox/contato/contato.html">Contato</a></li>
+                    <li><button id="btnAuthHeader" class="btn-menu-painel-gatilho" onclick="window.location.href='login/login.html'">Entrar</button></li>
                 </ul>
             </nav>
         </div>
@@ -33,8 +33,8 @@
         <div class="conteudo-heroi">
             <p class="subtitulo-heroi">Consultoria Automotiva Especializada</p>
             <h1 class="titulo-heroi">SEU SONHO É NOSSA MISSÃO</h1>
-            <p class="descricao-heroi">Soluções completas em consultoria e comercialização de veículos premium</p>
-            <button class="btn-saiba-mais">Saiba Mais Sobre Nós</button>
+        
+            <button class="btn-saiba-mais">Saiba Mais</button>
         </div>
     </section>
 
@@ -83,7 +83,7 @@
 <section class="portfolio" id="portfolio">
     <div class="container">
         <h2>PORTFÓLIO</h2>
-        <p class="descricao-portfolio">Confira alguns dos veículos premium que tivemos a honra de trabalhar. Nossos projetos variam desde simples negociações até consultoria completa, sempre com excelência e dedicação total em cada caso.</p>
+        <p class="descricao-portfolio">Confira alguns dei veículos premium que tivemos a honra de trabalhar. Nossos projetos variam desde simples negociações até consultoria completa, sempre com excelência e dedicação total em cada caso.</p>
         
         <div class="carrossel">
             <button class="btn-anterior" id="btnAnterior">❮</button>
@@ -217,7 +217,7 @@
         <div class="container">
             <div class="conteudo-rodape">
                 <div class="info-rodape">
-                    <img src="img/logovelox.png" alt="Logo Velox" class="logo-rodape">
+                    <img src="../Velox/img/logovelox.png" alt="Logo Velox" class="logo-rodape">
                     A Velox é sua parceira de confiança em consultoria automotiva. Com profissionalismo, transparência e dedicação, transformamos sonhos em realidade no mercado de veículos premium.
                 </div>
                 <div class="links-rodape">
@@ -244,6 +244,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="../Velox/index/script.js"></script>
+ <script src="../Velox/menu-lateral/lateral.js"></script>
 </body>
 </html>
