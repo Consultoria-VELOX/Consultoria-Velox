@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="../assets/img/iconeVelox.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Orçamento - Velox Consultoria Automotiva</title>
+    <link rel="stylesheet" href="../assets/css/estilo.css">
+    <link rel="stylesheet" href="../assets/css/solicitacao.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link rel="stylesheet" href="../assets/css/lateral.css">
+  
+</head>
+<body>
+  
+    <header class="cabecalho">
+        <div class="container-nav">
+            <div class="logo">
+                <img src="../assets/img/logovelox.png" alt="Logo Velox">
+            </div>
+            <nav class="navegacao">
+                <button class="botao-menu" id="botaoMenu">☰</button>
+                <ul class="menu" id="menu">
+                    <li><a href="../../index.html">Início</a></li>
+                    <li><a href="../orcamento/solicitacao.html">Solicitar Orçamento</a></li>
+                    <li><a href="../estoque/estoque.html">Estoque</a></li>
+                    <li><a href="../contato/contato.html">Contato</a></li>
+                    <li><button id="btnAuthHeader" class="btn-menu-painel-gatilho" onclick="window.location.href='../login/login.html'">Entrar</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+  
+    <section class="banner-orcamento">
+        <div class="conteudo-banner">
+            <h1>Solicite seu Orçamento</h1>
+            <p>Preencha o formulário abaixo e receba uma proposta personalizada em até 24 horas</p>
+        </div>
+    </section>
+
+   
+    <section class="secao-orcamento">
+        <div class="container">
+            <div class="layout-orcamento">
+              
+                <div class="coluna-info">
+                    <div class="card-info">
+                        <div class="icone-info">📞</div>
+                        <h3>Atendimento Rápido</h3>
+                        <p>Responderemos seu orçamento em até 24 horas úteis com uma proposta personalizada e competitiva.</p>
+                    </div>
+                    <div class="card-info">
+                        <div class="icone-info">✓</div>
+                        <h3>Profissionalismo Garantido</h3>
+                        <p>Nossa equipe de especialistas analisa cada solicitação com dedicação e oferece as melhores soluções.</p>
+                    </div>
+                    <div class="card-info">
+                        <div class="icone-info">🔒</div>
+                        <h3>Dados Protegidos</h3>
+                        <p>Todos os seus dados são confidenciais e utilizados apenas para preparação do seu orçamento.</p>
+                    </div>
+                    <div class="card-info">
+                        <div class="icone-info">💎</div>
+                        <h3>Melhores Condições</h3>
+                        <p>Oferecemos as melhores condições de mercado com transparência total em todas as operações.</p>
+                    </div>
+                </div>
+
+                <div class="coluna-formulario">
+                    <form id="formularioOrcamento" action="https://formspree.io/f/mzdqbpen" method="POST" class="formulario-orcamento">
+                       
+                        <fieldset class="grupo-formulario">
+                            <legend>📋 Dados Pessoais</legend>
+                            
+                            <div class="linha-dupla">
+                                <div class="grupo-input">
+                                    <label for="nome">Nome Completo *</label>
+                                    <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                                    <span class="erro" id="erroNome"></span>
+                                </div>
+                                <div class="grupo-input">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                                    <span class="erro" id="erroEmail"></span>
+                                </div>
+                            </div>
+
+                            <div class="linha-dupla">
+                                <div class="grupo-input">
+                                    <label for="telefone">Telefone *</label>
+                                    <input type="tel" id="telefone" name="telefone" placeholder="(11) 98765-4321" required>
+                                    <span class="erro" id="erroTelefone"></span>
+                                </div>
+                                <div class="grupo-input">
+                                    <label for="cpf">CPF/CNPJ *</label>
+                                    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required>
+                                    <span class="erro" id="erroCpf"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                       
+                        <fieldset class="grupo-formulario">
+                            <legend>🚗 Tipo de Serviço</legend>
+                            
+                            <div class="opcoes-servico">
+                                <label class="opcao-servico">
+                                    <input type="radio" name="tipoServico" value="Compra de Veículo" required>
+                                    <span class="customRadio"></span>
+                                    <span class="texto-opcao">
+                                        <strong>Compra de Veículo</strong>
+                                        <small>Procurando comprar um veículo premium</small>
+                                    </span>
+                                </label>
+
+                                <label class="opcao-servico">
+                                    <input type="radio" name="tipoServico" value="Venda de Veículo">
+                                    <span class="customRadio"></span>
+                                    <span class="texto-opcao">
+                                        <strong>Venda de Veículo</strong>
+                                        <small>Deseja vender seu automóvel</small>
+                                    </span>
+                                </label>
+
+                                <label class="opcao-servico">
+                                    <input type="radio" name="tipoServico" value="Consultoria">
+                                    <span class="customRadio"></span>
+                                    <span class="texto-opcao">
+                                        <strong>Consultoria</strong>
+                                        <small>Precisa de orientação especializada</small>
+                                    </span>
+                                </label>
+
+                                <label class="opcao-servico">
+                                    <input type="radio" name="tipoServico" value="Outro">
+                                    <span class="customRadio"></span>
+                                    <span class="texto-opcao">
+                                        <strong>Outro</strong>
+                                        <small>Outro tipo de serviço</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                     
+                        <fieldset class="grupo-formulario" id="detalhesVeiculo">
+                            <legend>🏎️ Detalhes do Veículo</legend>
+                            
+                            <div class="linha-dupla">
+                                <div class="grupo-input">
+                                    <label for="marca">Marca do Veículo *</label>
+                                    <input type="text" id="marca" name="marca" placeholder="Ex: BMW, Mercedes, Audi">
+                                    <span class="erro" id="erroMarca"></span>
+                                </div>
+                                <div class="grupo-input">
+                                    <label for="modelo">Modelo *</label>
+                                    <input type="text" id="modelo" name="modelo" placeholder="Ex: M440i, C63, RS6">
+                                    <span class="erro" id="erroModelo"></span>
+                                </div>
+                            </div>
+
+                            <div class="linha-dupla">
+                                <div class="grupo-input">
+                                    <label for="ano">Ano do Veículo *</label>
+                                    <input type="number" id="ano" name="ano" placeholder="2024" min="1990" max="2030">
+                                    <span class="erro" id="erroAno"></span>
+                                </div>
+                                <div class="grupo-input">
+                                    <label for="orcamento">Orçamento Aproximado *</label>
+                                    <input type="text" id="orcamento" name="orcamento" placeholder="R$ 0,00">
+                                    <span class="erro" id="erroOrcamento"></span>
+                                </div>
+                            </div>
+
+                            <div class="grupo-input">
+                                <label for="condicao">Condição do Veículo *</label>
+                                <select id="condicao" name="condicao">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="Novo">Novo</option>
+                                    <option value="Seminovo (0-5 anos)">Seminovo (0-5 anos)</option>
+                                    <option value="Usado (5-10 anos)">Usado (5-10 anos)</option>
+                                    <option value="Para Restauração">Para Restauração</option>
+                                </select>
+                                <span class="erro" id="erroCondicao"></span>
+                            </div>
+                        </fieldset>
+
+                     
+                        <fieldset class="grupo-formulario">
+                            <legend>📝 Informações Adicionais</legend>
+                            
+                            <div class="grupo-input">
+                                <label for="descricao">Descreva suas Necessidades</label>
+                                <textarea id="descricao" name="descricao" placeholder="Conte-nos mais sobre o que você procura ou sobre seu veículo..." rows="5"></textarea>
+                            </div>
+
+                            <div class="grupo-input checkbox-grupo">
+                                <label class="checkbox-custom">
+                                    <input type="checkbox" id="aceitar" name="aceitar" required>
+                                    <span class="checkmark"></span>
+                                    <span>Aceito que a Velox entre em contato comigo para detalhar o orçamento *</span>
+                                </label>
+                                <span class="erro" id="erroAceitar"></span>
+                            </div>
+
+                            <div class="grupo-input checkbox-grupo">
+                                <label class="checkbox-custom">
+                                    <input type="checkbox" id="termos" name="termos" required>
+                                    <span class="checkmark"></span>
+                                    <span>Concordo com os <a href="#" style="color: var(--cor-primaria);">Termos de Uso</a> e <a href="#" style="color: var(--cor-primaria);">Política de Privacidade</a> *</span>
+                                </label>
+                                <span class="erro" id="erroTermos"></span>
+                            </div>
+                        </fieldset>
+
+                   
+                        <div class="grupo-botoes">
+                            <button type="reset" class="btn-limpar">Limpar Formulário</button>
+                            <button type="submit" class="btn-enviar">Solicitar Orçamento</button>
+                        </div>
+
+                        <div id="mensagemSucesso" class="mensagem-sucesso" style="display: none;">
+                            <div class="icone-sucesso">✓</div>
+                            <h3>Orçamento Solicitado com Sucesso!</h3>
+                            <p>Obrigado pelo seu interesse. Você receberá um email de confirmação em breve e nossa equipe analisará sua solicitação.</p>
+                            <p class="codigo-rastreamento">Código de rastreamento: <strong id="codigoRastreamento"></strong></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<section class="faq-orcamento">
+    <div class="container">
+        <h2>Perguntas Frequentes</h2>
+        <p>Tire suas dúvidas rápidas sobre o processo de orçamento e consultoria da Velox.</p>
+
+        <div class="accordion">
+            <div class="item-accordion">
+                <button type="button" class="btn-accordion">
+                    <span>Quanto tempo leva para receber o orçamento?</span>
+                    <span class="icone">▼</span>
+                </button>
+                <div class="conteudo-accordion">
+                    <p>Nosso sistema gera um código de rastreamento imediatamente. A análise detalhada da nossa equipe é enviada para o seu e-mail em até 24 horas úteis.</p>
+                </div>
+            </div>
+
+            <div class="item-accordion">
+                <button type="button" class="btn-accordion">
+                    <span>Quais estados a Velox Consultoria atende?</span>
+                    <span class="icone">▼</span>
+                </button>
+                <div class="conteudo-accordion">
+                    <p>Atendemos de forma 100% online e presencial em todo o território nacional para avaliação, intermediação de compra e venda de veículos.</p>
+                </div>
+            </div>
+
+            <div class="item-accordion">
+                <button type="button" class="btn-accordion">
+                    <span>Existe algum custo para cancelar a solicitação?</span>
+                    <span class="icone">▼</span>
+                </button>
+                <div class="conteudo-accordion">
+                    <p>Não. A solicitação de orçamento inicial é totalmente gratuita e sem compromisso adaptada para a sua necessidade.</p>
+                </div>
+            </div>
+
+            <div class="item-accordion">
+                <button type="button" class="btn-accordion">
+                    <span>Posso solicitar orçamento para vários veículos?</span>
+                    <span class="icone">▼</span>
+                </button>
+                <div class="conteudo-accordion">
+                    <p>Claro! Você pode enviar múltiplas solicitações de orçamento. Para cada veículo, preencha um formulário separado e nossa equipe preparará propostas individualizadas.</p>
+                </div>
+            </div>
+
+            <div class="item-accordion">
+                <button type="button" class="btn-accordion">
+                    <span>Como funciona o atendimento após o orçamento?</span>
+                    <span class="icone">▼</span>
+                </button>
+                <div class="conteudo-accordion">
+                    <p>Após receber seu orçamento, você poderá negociar os termos, solicitar ajustes ou tirar dúvidas diretamente com nosso consultor especializado via telefone, email ou WhatsApp.</p>
+                </div>
+            </div>
+        </div> </div> </section> ```
+
+   
+    <section class="cta-orcamento">
+        <div class="container">
+            <h2>Ainda tem Dúvidas?</h2>
+            <p>Entre em contato conosco via WhatsApp e converse com um especialista em tempo real</p>
+            <a href="https://wa.me/5511981090128" target="_blank" class="btn-whatsapp">💬 Falar com Especialista</a>
+        </div>
+    </section>
+
+
+    <footer class="rodape">
+        <div class="container">
+            <div class="conteudo-rodape">
+                <div class="info-rodape">
+                    <img src="../assets/img/logovelox.png" alt="Logo Velox" class="logo-rodape">
+                    A Velox é sua parceira de confiança em consultoria automotiva. Com profissionalismo, transparência e dedicação, transformamos sonhos em realidade no mercado de veículos premium.
+                </div>
+                <div class="links-rodape">
+                    <h4>Links Rápidos</h4>
+                    <a href="../../index.html">Início</a>
+                    <a href="../../index.html#sobre">Sobre Nós</a>
+                    <a href="../../index.html#servicos">Serviços</a>
+                    <a href="../../index.html#contato">Contato</a>
+                </div>
+                <div class="link-politica">
+                    <h4>Informações</h4>
+                    <a href="#politica">Política de Privacidade</a>
+                    <a href="#termos">Termos de Uso</a>
+                </div>
+            </div>
+            <div class="rodape-final">
+                <div class="redes-sociais">
+                    <a href="https://facebook.com/" title="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.898V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg></a>
+                    <a href="https://instagram.com/" title="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                    <a href="https://wa.me/5511981090128" title="WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                </div>
+                <p class="copyright">&copy; 2026 Velox Consultoria Automotiva. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/solicitacao.js"></script>
+     <script src="../assets/js/lateral.js"></script>
+
+</body>
+</html>
