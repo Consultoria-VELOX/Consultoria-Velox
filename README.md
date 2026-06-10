@@ -1,5 +1,4 @@
 # 🚗 Consultoria Velox
-
 > Sistema web de consultoria automotiva desenvolvido como Projeto Integrador do 1º semestre de ADS — UNISENAI Campus SCS Boa Vista.
 
 O sistema permite que clientes solicitem serviços de **compra, venda e consultoria** de veículos através de um sistema de tickets, com painel administrativo para gerenciamento de solicitações e estoque.
@@ -25,27 +24,38 @@ O sistema permite que clientes solicitem serviços de **compra, venda e consulto
 ```
 Consultoria-Velox/
 │
-├── docs/                          # Documentação (Engenharia de Software)
-│   ├── Especificacao_Software.docx  # Especificação completa + casos de uso + MER
-│   └── TAP.docx                     # Termo de Abertura do Projeto
+├── docs/                                      # Documentação (Engenharia de Software)
+│   ├── Especificacao_Final_Consultoria.docx     # Especificação completa + casos de uso + MER
+│   └── Termo de Abertura de Projeto.docx        # Termo de Abertura do Projeto
 │
-├── frontend/                      # Desenvolvimento Web Front-End
-│   ├── index.html
-│   ├── css/
-│   ├── js/
-│   └── assets/
+├── frontend/                                  # Desenvolvimento Web Front-End
+│   ├── index.html                               # Página principal
+│   ├── assets/
+│   │   ├── css/                                 # Todos os estilos
+│   │   ├── js/                                  # Todos os scripts
+│   │   └── img/                                 # Imagens e favicon
+│   ├── cadastro/
+│   ├── contato/
+│   ├── estoque/
+│   ├── login/
+│   ├── menu-lateral/
+│   ├── orcamento/
+│   └── ticket/
 │
-├── database/                      # Banco de Dados
-│   ├── MER.png                      # Modelo Entidade-Relacionamento
-│   └── script.sql                   # Script de criação das tabelas
+├── database/                                  # Banco de Dados
+│   ├── MER-Velox.png                            # Modelo Entidade-Relacionamento
+│   └── db_velox.sql                             # Script de criação das tabelas
 │
-├── src/                           # Linguagem de Programação (Java)
-│   ├── telas/
-│   │   ├── TelaLogin.java
-│   │   └── TelaCadastro.java
-│
-├── network/                       # TI e Conectividade
-│   └── diagrama_rede.pkt            # Diagrama de rede (Cisco Packet Tracer)
+├── src/                                       # Linguagem de Programação (Java)
+│   └── consultoriaVelox/                        # Projeto Maven (NetBeans)
+│       ├── pom.xml
+│       └── src/main/java/org/example/
+│           ├── Velox.java                       # Classe principal / ponto de entrada
+│           ├── Usuario.java                     # Telas e lógica de usuários
+│           ├── Ticket.java                      # Telas e lógica de tickets
+│           ├── Estoque.java                     # Telas e lógica de estoque
+│           ├── Sessao.java                      # Controle de sessão e cargos
+│           └── Conexao.java                     # Conexão JDBC com MySQL
 │
 └── README.md
 ```
@@ -56,12 +66,12 @@ Consultoria-Velox/
 
 | Camada | Tecnologia |
 |--------|------------|
-| Back-End | Java + Spring Boot |
+| Back-End | Java (Swing + JDBC) |
 | Front-End | HTML, CSS, JavaScript |
 | Banco de Dados | MySQL |
+| Build | Maven |
 | Prototipação | Figma |
 | Versionamento | Git / GitHub |
-| Rede | Cisco Packet Tracer |
 
 ---
 
@@ -108,5 +118,3 @@ O banco é composto por 5 tabelas:
 | Instituição | UNISENAI — Campus SCS Boa Vista |
 | Curso | Tecnólogo em Análise e Desenvolvimento de Sistemas |
 | Componente | Projeto Integrador — 1º Semestre |
-| Professores | Daniel, Luiz, Luyra e Roberto |
-| Apresentação | Semana de 12 de junho de 2026 |
